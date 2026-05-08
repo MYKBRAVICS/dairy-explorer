@@ -1,0 +1,2277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<title>Dairy Explorer</title>
+<meta name="description" content="A complete expert reference guide to modern dairy production — from calf barn to boardroom. 16 sections covering nutrition, health, economics, and sustainability.">
+<meta name="theme-color" content="#1B4332">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Dairy Explorer">
+<meta property="og:title" content="Dairy Explorer — Expert Reference Guide">
+<meta property="og:description" content="16 sections covering dairy nutrition, health, reproduction, economics, and sustainability.">
+<meta property="og:type" content="website">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Bitter:ital,wght@0,400;0,600;0,700;1,400&family=Fira+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green-deep:   #1B4332;
+  --green-mid:    #2D6A4F;
+  --green-light:  #52B788;
+  --green-pale:   #D8F3DC;
+  --cream:        #FEFAE0;
+  --cream-dark:   #F0E6C8;
+  --gold:         #D4A017;
+  --gold-light:   #FFF0B3;
+  --gold-deep:    #A07800;
+  --red-soft:     #C0392B;
+  --red-pale:     #FADBD8;
+  --blue-soft:    #1A6B9E;
+  --blue-pale:    #D6EAF8;
+  --teal:         #1B7A6F;
+  --teal-pale:    #D0EFEB;
+  --ink:          #1A2A1E;
+  --gray:         #5C6858;
+  --gray-light:   #EEF2EC;
+  --shadow:       rgba(27,67,50,0.13);
+  --shadow-lg:    rgba(27,67,50,0.22);
+  --radius:       16px;
+  --app-width:    420px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  font-family: 'Nunito', sans-serif;
+  background: #2D3A2E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* iOS safe areas */
+.phone {
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* ── PHONE SHELL ── */
+.phone {
+  width: 100%;
+  max-width: var(--app-width);
+  height: 100dvh;
+  max-height: 860px;
+  background: var(--cream);
+  border-radius: 36px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.5), 0 0 0 8px #111, inset 0 0 0 1px rgba(255,255,255,0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+@media (max-width: 900px) {
+  html, body {
+    display: block;
+    background: var(--cream);
+    height: 100%;
+    width: 100%;
+  }
+  .phone {
+    border-radius: 0;
+    box-shadow: none;
+    max-width: 100%;
+    width: 100%;
+    height: 100dvh;
+    max-height: 100dvh;
+  }
+}
+
+/* ── STATUS BAR ── */
+.status-bar {
+  background: var(--green-deep);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 20px 6px;
+  flex-shrink: 0;
+}
+.status-time { color: #fff; font-size: 0.78rem; font-weight: 700; }
+.status-icons { color: rgba(255,255,255,0.8); font-size: 0.72rem; display: flex; gap: 6px; align-items: center; }
+
+/* ── SCREEN SYSTEM ── */
+.screens { flex: 1; overflow: hidden; position: relative; }
+.screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(40px);
+  transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+.screen.active {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateX(0);
+}
+.screen.slide-back {
+  transform: translateX(-40px);
+}
+
+/* ── APP HEADER ── */
+.app-header {
+  background: var(--green-deep);
+  padding: 14px 20px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.header-back {
+  background: rgba(255,255,255,0.12);
+  border: none;
+  color: #fff;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+.header-back:hover { background: rgba(255,255,255,0.22); }
+.header-title { color: #fff; font-size: 1.05rem; font-weight: 700; flex: 1; }
+.header-icon { font-size: 1.3rem; }
+
+/* ── SCROLL AREA ── */
+.scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+.scroll-area::-webkit-scrollbar { width: 3px; }
+.scroll-area::-webkit-scrollbar-thumb { background: var(--green-light); border-radius: 2px; }
+
+/* ── BOTTOM NAV ── */
+.bottom-nav {
+  background: var(--green-deep);
+  display: flex;
+  padding: 10px 0 14px;
+  flex-shrink: 0;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.nav-tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  padding: 4px 0;
+  transition: all 0.2s;
+  border: none;
+  background: none;
+}
+.nav-tab-icon { font-size: 1.35rem; line-height: 1; }
+.nav-tab-label { color: rgba(255,255,255,0.45); font-size: 0.65rem; font-weight: 600; letter-spacing: 0.04em; }
+.nav-tab.active .nav-tab-label { color: var(--gold); }
+.nav-tab.active .nav-tab-icon { filter: drop-shadow(0 0 6px rgba(212,160,23,0.7)); }
+
+/* ═══════════════════════════════
+   HOME SCREEN
+════════════════════════════════*/
+.home-hero {
+  background: linear-gradient(160deg, var(--green-deep) 0%, var(--green-mid) 55%, #3A7A5A 100%);
+  padding: 28px 24px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.home-hero::before {
+  content: '';
+  position: absolute;
+  top: -30px; right: -30px;
+  width: 180px; height: 180px;
+  border-radius: 50%;
+  background: rgba(82,183,136,0.15);
+}
+.home-hero::after {
+  content: '';
+  position: absolute;
+  bottom: -20px; left: 20px;
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  background: rgba(212,160,23,0.1);
+}
+.hero-badge {
+  background: rgba(212,160,23,0.2);
+  border: 1px solid rgba(212,160,23,0.4);
+  color: var(--gold);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 12px;
+  font-family: 'Fira Mono', monospace;
+}
+.hero-cow { font-size: 3.2rem; margin-bottom: 8px; display: block; animation: moo 3s ease-in-out infinite; }
+@keyframes moo { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+.hero-title {
+  font-family: 'Bitter', serif;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+.hero-title em { font-style: italic; color: var(--gold); }
+.hero-sub { color: rgba(255,255,255,0.65); font-size: 0.83rem; line-height: 1.65; margin-bottom: 20px; }
+.hero-stats { display: flex; gap: 16px; flex-wrap: wrap; }
+.stat-pill {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 10px;
+  padding: 8px 14px;
+  text-align: center;
+}
+.stat-pill-num {
+  font-family: 'Bitter', serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+}
+.stat-pill-label {
+  font-size: 0.62rem;
+  color: rgba(255,255,255,0.55);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-top: 3px;
+  font-family: 'Fira Mono', monospace;
+}
+
+.home-body { padding: 20px 16px 24px; }
+
+.section-heading {
+  font-family: 'Bitter', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--green-deep);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-heading::after {
+  content: '';
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(to right, var(--green-light), transparent);
+  border-radius: 1px;
+}
+
+/* Journey Grid */
+.toc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.toc-card {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 16px 14px;
+  cursor: pointer;
+  box-shadow: 0 2px 10px var(--shadow);
+  border: 2px solid transparent;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.toc-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--card-accent, var(--green-light));
+}
+.toc-card:hover, .toc-card:active { transform: translateY(-2px); box-shadow: 0 6px 20px var(--shadow-lg); }
+.toc-card-icon { font-size: 1.8rem; margin-bottom: 8px; }
+.toc-card-num {
+  font-family: 'Fira Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--gray);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+.toc-card-title {
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: var(--ink);
+  line-height: 1.3;
+}
+.toc-card-cat {
+  font-size: 0.65rem;
+  color: var(--gray);
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* ═══════════════════════════════
+   SECTION SCREEN CONTENT
+════════════════════════════════*/
+.sec-hero {
+  padding: 24px 20px 20px;
+  position: relative;
+  overflow: hidden;
+}
+.sec-hero .sec-num {
+  font-family: 'Fira Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 6px;
+}
+.sec-hero h1 {
+  font-family: 'Bitter', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+.sec-hero p {
+  color: rgba(255,255,255,0.7);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+.sec-body { padding: 16px; }
+
+.h2-label {
+  font-family: 'Bitter', serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--green-deep);
+  margin: 20px 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.h2-label::after {
+  content: '';
+  flex: 1; height: 1px;
+  background: var(--cream-dark);
+}
+
+/* Cards */
+.info-card {
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+  border-left: 4px solid;
+  display: flex;
+  gap: 12px;
+}
+.info-card .ic-icon { font-size: 1.3rem; flex-shrink: 0; }
+.info-card .ic-title { font-weight: 700; font-size: 0.85rem; color: var(--ink); margin-bottom: 4px; }
+.info-card p { font-size: 0.8rem; color: var(--gray); line-height: 1.55; margin: 0; }
+.info-card.blue { background: var(--blue-pale); border-color: var(--blue-soft); }
+.info-card.green { background: var(--green-pale); border-color: var(--green-light); }
+.info-card.gold { background: var(--gold-light); border-color: var(--gold); }
+.info-card.red { background: var(--red-pale); border-color: var(--red-soft); }
+.info-card.teal { background: var(--teal-pale); border-color: var(--teal); }
+
+/* Callout */
+.callout-block {
+  background: var(--green-deep);
+  color: #fff;
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 14px;
+  position: relative;
+  overflow: hidden;
+}
+.callout-block::before {
+  content: '';
+  position: absolute;
+  top: -20px; right: -20px;
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: rgba(82,183,136,0.15);
+}
+.callout-block.gold-call { background: var(--gold); }
+.callout-block.gold-call h3 { color: var(--green-deep); }
+.callout-block.gold-call p { color: rgba(0,0,0,0.65); }
+.callout-block.teal-call { background: var(--teal); }
+.callout-block h3 {
+  font-family: 'Bitter', serif;
+  font-size: 1rem;
+  color: var(--gold);
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+.callout-block p { font-size: 0.8rem; color: rgba(255,255,255,0.75); line-height: 1.55; margin: 0; }
+
+/* Lists */
+.dairy-list { list-style: none; display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+.dairy-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--gray);
+  line-height: 1.55;
+}
+.dairy-list li::before {
+  content: '◆';
+  color: var(--green-light);
+  font-size: 0.45rem;
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+.dairy-list li strong { color: var(--ink); }
+.dairy-list.gold li::before { color: var(--gold); }
+.dairy-list.teal li::before { color: var(--teal); }
+.dairy-list.blue li::before { color: var(--blue-soft); }
+.dairy-list.red li::before { color: var(--red-soft); }
+
+.dairy-ol { list-style: none; counter-reset: dc; display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+.dairy-ol li {
+  counter-increment: dc;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.82rem;
+  color: var(--gray);
+  line-height: 1.55;
+}
+.dairy-ol li::before {
+  content: counter(dc);
+  background: var(--green-deep);
+  color: #fff;
+  font-family: 'Fira Mono', monospace;
+  font-size: 0.62rem;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+}
+
+/* Tables */
+.tbl-wrap {
+  overflow-x: auto;
+  border-radius: 12px;
+  margin-bottom: 14px;
+  box-shadow: 0 1px 8px var(--shadow);
+}
+table { width: 100%; border-collapse: collapse; font-size: 0.75rem; min-width: 480px; }
+thead tr { background: var(--green-deep); color: #fff; }
+thead th { padding: 10px 12px; text-align: left; font-weight: 700; font-size: 0.7rem; letter-spacing: 0.04em; }
+thead th:first-child { border-radius: 12px 0 0 0; }
+thead th:last-child { border-radius: 0 12px 0 0; }
+tbody tr:nth-child(even) { background: var(--gray-light); }
+tbody tr:nth-child(odd) { background: #fff; }
+tbody td { padding: 9px 12px; color: var(--gray); vertical-align: top; line-height: 1.45; }
+tbody td:first-child { color: var(--ink); font-weight: 600; }
+tfoot tr { background: var(--gold-light); }
+tfoot td { padding: 8px 12px; font-size: 0.71rem; color: var(--ink); font-style: italic; border-top: 2px solid var(--gold); }
+.tbl-teal thead tr { background: var(--teal); }
+.tbl-gold thead tr { background: var(--gold); }
+.tbl-gold thead tr th { color: #fff; }
+.tbl-red  thead tr { background: var(--red-soft); }
+.tbl-green thead tr { background: #2E7D32; }
+
+/* KPI Grid */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.kpi-card {
+  background: var(--green-deep);
+  border-radius: 12px;
+  padding: 14px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.kpi-card::after {
+  content: '';
+  position: absolute;
+  bottom: -15px; right: -15px;
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.04);
+}
+.kpi-card.teal-bg { background: var(--teal); }
+.kpi-card.gold-bg { background: var(--gold-deep); }
+.kpi-card.blue-bg { background: var(--blue-soft); }
+.kpi-card.gr-bg { background: #2E7D32; }
+.kpi-label { font-family:'Fira Mono',monospace; font-size:0.58rem; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.55); margin-bottom:6px; }
+.kpi-val { font-family:'Bitter',serif; font-size:1.5rem; font-weight:700; line-height:1; margin-bottom:2px; }
+.kpi-unit { font-size:0.68rem; color:rgba(255,255,255,0.6); }
+.kpi-bench { margin-top:8px; padding-top:6px; border-top:1px solid rgba(255,255,255,0.15); font-size:0.65rem; color:rgba(255,255,255,0.5); }
+
+/* Two column */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.col-box { background: #fff; border: 1px solid var(--cream-dark); border-radius: 12px; padding: 14px; }
+.col-box-title { font-family:'Bitter',serif; font-size:0.9rem; font-weight:700; color:var(--green-deep); margin-bottom:10px; }
+
+/* Ration cards */
+.ration-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.ration-card {
+  background: var(--cream);
+  border: 1px solid var(--cream-dark);
+  border-radius: 12px;
+  padding: 14px;
+  position: relative;
+  overflow: hidden;
+}
+.ration-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+}
+.ration-card.blue::after  { background: var(--blue-soft); }
+.ration-card.teal::after  { background: var(--teal); }
+.ration-card.gold::after  { background: var(--gold); }
+.ration-card.green::after { background: #2E7D32; }
+.ration-card.red::after   { background: var(--red-soft); }
+.rc-title { font-family:'Bitter',serif; font-size:0.88rem; font-weight:700; color:var(--ink); margin-bottom:2px; }
+.rc-sub { font-size:0.65rem; color:var(--gray); font-family:'Fira Mono',monospace; margin-bottom:10px; }
+.rc-item { display:flex; justify-content:space-between; align-items:baseline; padding:4px 0; border-bottom:1px dashed var(--cream-dark); font-size:0.73rem; gap:6px; }
+.rc-item:last-of-type { border-bottom:none; }
+.rc-ingredient { color:var(--gray); flex:1; }
+.rc-amount { font-family:'Fira Mono',monospace; font-size:0.68rem; color:var(--green-deep); font-weight:600; white-space:nowrap; }
+.rc-total { margin-top:8px; padding-top:6px; border-top:2px solid var(--cream-dark); display:flex; justify-content:space-between; font-size:0.75rem; font-weight:700; color:var(--ink); }
+.rc-total-amt { font-family:'Fira Mono',monospace; color:var(--green-mid); }
+.rc-nutrient { margin-top:6px; font-size:0.65rem; font-family:'Fira Mono',monospace; }
+
+/* Timeline */
+.timeline { display:flex; flex-direction:column; gap:0; }
+.tl-item { display:flex; gap:14px; }
+.tl-line { display:flex; flex-direction:column; align-items:center; flex-shrink:0; }
+.tl-dot {
+  width:34px; height:34px;
+  border-radius:50%;
+  background:var(--green-mid);
+  display:flex; align-items:center; justify-content:center;
+  font-size:1rem;
+  flex-shrink:0;
+  border:3px solid var(--cream-dark);
+}
+.tl-dot.teal { background:var(--teal); }
+.tl-dot.gold { background:var(--gold-deep); }
+.tl-dot.red  { background:var(--red-soft); }
+.tl-dot.blue { background:var(--blue-soft); }
+.tl-dot.green { background:#2E7D32; }
+.tl-connector { width:2px; flex:1; background:var(--cream-dark); min-height:12px; margin:2px 0; }
+.tl-body { padding-bottom:16px; flex:1; }
+.tl-stage { font-family:'Fira Mono',monospace; font-size:0.63rem; color:var(--green-light); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:2px; }
+.tl-title { font-weight:800; font-size:0.88rem; color:var(--ink); margin-bottom:4px; }
+.tl-desc { font-size:0.78rem; color:var(--gray); line-height:1.55; }
+
+/* Tag */
+.tag {
+  display:inline-block;
+  padding:2px 8px;
+  border-radius:20px;
+  font-family:'Fira Mono',monospace;
+  font-size:0.6rem;
+  font-weight:500;
+  letter-spacing:0.05em;
+  text-transform:uppercase;
+}
+.tag.blue { background:var(--blue-pale); color:var(--blue-soft); }
+.tag.teal { background:var(--teal-pale); color:var(--teal); }
+.tag.gold { background:var(--gold-light); color:var(--gold-deep); }
+.tag.green { background:var(--green-pale); color:var(--green-mid); }
+.tag.red   { background:var(--red-pale); color:var(--red-soft); }
+
+.divider { height:1px; background:linear-gradient(to right,var(--cream-dark),transparent); margin:16px 0; }
+
+p.body-p { font-size:0.82rem; color:var(--gray); line-height:1.65; margin-bottom:10px; }
+
+.footer-note {
+  text-align:center;
+  font-family:'Fira Mono',monospace;
+  font-size:0.6rem;
+  color:var(--gray);
+  letter-spacing:0.07em;
+  padding:12px 16px 4px;
+}
+
+/* Search screen */
+.search-bar-wrap { padding: 16px; }
+.search-input {
+  width:100%;
+  background: #fff;
+  border: 2px solid var(--cream-dark);
+  border-radius: 50px;
+  padding: 12px 20px;
+  font-family:'Nunito',sans-serif;
+  font-size:0.9rem;
+  color: var(--ink);
+  outline:none;
+  transition: border-color 0.2s;
+}
+.search-input:focus { border-color: var(--green-light); }
+.search-result {
+  background:#fff;
+  border-radius:12px;
+  padding:14px 16px;
+  margin:0 16px 10px;
+  cursor:pointer;
+  box-shadow:0 1px 6px var(--shadow);
+  display:flex;
+  align-items:center;
+  gap:12px;
+  transition:all 0.2s;
+}
+.search-result:hover { box-shadow:0 4px 14px var(--shadow-lg); transform:translateY(-1px); }
+.sr-icon { font-size:1.6rem; flex-shrink:0; }
+.sr-title { font-weight:700; font-size:0.85rem; color:var(--ink); }
+.sr-sub { font-size:0.72rem; color:var(--gray); margin-top:2px; }
+
+/* Welcome journey card */
+.journey-card {
+  background: linear-gradient(135deg, var(--green-mid), var(--green-deep));
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 16px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.journey-card::after {
+  content: '🐄';
+  position: absolute;
+  bottom: -8px; right: 12px;
+  font-size: 3rem;
+  opacity: 0.15;
+}
+.journey-card h3 { font-family:'Bitter',serif; font-size:1.1rem; font-weight:700; margin-bottom:6px; }
+.journey-card p { font-size:0.78rem; color:rgba(255,255,255,0.75); line-height:1.55; }
+
+/* Progress indicator */
+.progress-row { display:flex; align-items:center; gap:8px; margin-bottom:4px; }
+.prog-label { font-size:0.72rem; color:var(--gray); width:90px; flex-shrink:0; }
+.prog-bar { flex:1; height:6px; background:var(--cream-dark); border-radius:3px; overflow:hidden; }
+.prog-fill { height:100%; border-radius:3px; background:var(--green-light); }
+
+/* Journey screen */
+.journey-screen-hero {
+  background: linear-gradient(160deg, var(--green-deep) 0%, var(--teal) 100%);
+  padding: 24px 20px 20px;
+  position: relative;
+  overflow: hidden;
+}
+.journey-screen-hero::before {
+  content: '🗺';
+  position: absolute;
+  right: 16px; bottom: -8px;
+  font-size: 4rem;
+  opacity: 0.13;
+}
+.journey-screen-hero h2 {
+  font-family: 'Bitter', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 6px;
+}
+.journey-screen-hero p {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.55;
+}
+.journey-cat-title {
+  font-family: 'Bitter', serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--green-deep);
+  padding: 16px 16px 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.journey-cat-title::after {
+  content: '';
+  flex: 1; height: 1.5px;
+  background: linear-gradient(to right, var(--green-light), transparent);
+  border-radius: 1px;
+}
+.journey-list { display: flex; flex-direction: column; gap: 6px; padding: 0 16px 8px; }
+.journey-row {
+  background: #fff;
+  border-radius: 12px;
+  padding: 13px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  box-shadow: 0 1px 6px var(--shadow);
+  border-left: 4px solid var(--green-light);
+  transition: all 0.18s;
+}
+.journey-row:hover, .journey-row:active { transform: translateX(3px); box-shadow: 0 3px 12px var(--shadow-lg); }
+.journey-row-icon { font-size: 1.4rem; flex-shrink: 0; }
+.journey-row-info { flex: 1; }
+.journey-row-num { font-family: 'Fira Mono', monospace; font-size: 0.58rem; color: var(--gray); letter-spacing: 0.08em; text-transform: uppercase; }
+.journey-row-title { font-weight: 700; font-size: 0.83rem; color: var(--ink); line-height: 1.3; margin-top: 1px; }
+.journey-row-cat { font-size: 0.65rem; color: var(--gray); margin-top: 2px; }
+.journey-row-arrow { color: var(--green-light); font-size: 0.9rem; flex-shrink: 0; }
+
+/* Section prev/next navigation */
+.sec-nav {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px 16px;
+  background: var(--cream);
+  border-top: 1px solid var(--cream-dark);
+}
+.sec-nav-btn {
+  flex: 1;
+  background: var(--green-pale);
+  border: 1.5px solid var(--green-light);
+  border-radius: 10px;
+  padding: 10px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--green-deep);
+  transition: all 0.18s;
+}
+.sec-nav-btn:hover { background: var(--green-light); color: #fff; }
+.sec-nav-btn.next { justify-content: flex-end; }
+.sec-nav-btn.prev { justify-content: flex-start; }
+.sec-nav-btn span { font-size: 0.8rem; }
+.sec-nav-btn .nav-label { flex: 1; text-align: center; line-height: 1.2; }
+
+</style>
+</head>
+<body>
+
+<div class="phone">
+
+  <!-- STATUS BAR -->
+  <div class="status-bar">
+    <span class="status-time" id="clock">9:41</span>
+    <div class="status-icons">
+      <span>📶</span><span>🔋</span>
+    </div>
+  </div>
+
+  <!-- SCREENS -->
+  <div class="screens">
+
+    <!-- ══════════════════ HOME SCREEN ══════════════════ -->
+    <div class="screen active" id="screen-home">
+      <div class="scroll-area">
+        <div class="home-hero">
+          <div class="hero-badge">🌿 Expert Reference Guide — 2026 Edition</div>
+          <span class="hero-cow">🐄</span>
+          <h1 class="hero-title">Dairy<br><em>Explorer</em></h1>
+          <p class="hero-sub">A complete journey through modern dairy production — from calf barn to boardroom. Tap any section to begin exploring.</p>
+          <div class="hero-stats">
+            <div class="stat-pill"><div class="stat-pill-num">8</div><div class="stat-pill-label">Animal Groups</div></div>
+            <div class="stat-pill"><div class="stat-pill-num">40+</div><div class="stat-pill-label">Ration Tables</div></div>
+            <div class="stat-pill"><div class="stat-pill-num">16</div><div class="stat-pill-label">Sections</div></div>
+            <div class="stat-pill"><div class="stat-pill-num">305</div><div class="stat-pill-label">Day Cycle</div></div>
+          </div>
+        </div>
+
+        <div class="home-body">
+          <div class="journey-card">
+            <h3>🗺 Your Dairy Journey</h3>
+            <p>Start with the Overview to understand the enterprise, follow the Life Cycle, then dive into each Animal Group's nutrition. Finish with Management Systems and Economics for the complete picture.</p>
+          </div>
+
+          <div class="section-heading">🏛 Enterprise Overview</div>
+          <div class="toc-grid">
+            <div class="toc-card" style="--card-accent:#2D6A4F" onclick="showSection(1)">
+              <div class="toc-card-icon">🏛</div>
+              <div class="toc-card-num">Section 01</div>
+              <div class="toc-card-title">Introduction & Overview</div>
+              <div class="toc-card-cat">Foundation</div>
+            </div>
+            <div class="toc-card" style="--card-accent:#52B788" onclick="showSection(2)">
+              <div class="toc-card-icon">🔄</div>
+              <div class="toc-card-num">Section 02</div>
+              <div class="toc-card-title">Cow Life Cycle</div>
+              <div class="toc-card-cat">Life Cycle</div>
+            </div>
+          </div>
+
+          <div class="section-heading">🥛 Animal Groups & Rations</div>
+          <div class="toc-grid">
+            <div class="toc-card" style="--card-accent:#1B7A6F" onclick="showSection(3)">
+              <div class="toc-card-icon">🥛</div>
+              <div class="toc-card-num">Section 03</div>
+              <div class="toc-card-title">Milking Cows</div>
+              <div class="toc-card-cat">Core Group</div>
+            </div>
+            <div class="toc-card" style="--card-accent:#2D6A4F" onclick="showSection(4)">
+              <div class="toc-card-icon">🌿</div>
+              <div class="toc-card-num">Section 04</div>
+              <div class="toc-card-title">Dry Cows</div>
+              <div class="toc-card-cat">Far-Off Dry</div>
+            </div>
+            <div class="toc-card" style="--card-accent:#C0392B" onclick="showSection(5)">
+              <div class="toc-card-icon">⚡</div>
+              <div class="toc-card-num">Section 05</div>
+              <div class="toc-card-title">Close-Up / Transition</div>
+              <div class="toc-card-cat">Transition Nutrition</div>
+            </div>
+            <div class="toc-card" style="--card-accent:#1A6B9E" onclick="showSection(6)">
+              <div class="toc-card-icon">🌅</div>
+              <div class="toc-card-num">Section 06</div>
+              <div class="toc-card-title">Fresh Cows</div>
+              <div class="toc-card-cat">Days 1–21</div>
+            </div>
+            <div class="toc-card" style="--card-accent:#52B788" onclick="showSection(7)">
+              <div class="toc-card-icon">🐄</div>
+              <div class="toc-card-num">Section 07</div>
+              <div class="toc-card-title">Replacement Heifers</div>
+              <div class="toc-card-cat">Heifer Development</div>
+            </div>
+            <div class="toc-card" style="--card-accent:#D4A017" onclick="showSection(8)">
+              <div class="toc-card-icon">🍼</div>
+              <div class="toc-card-num">Section 08</div>
+              <div class="toc-card-title">Calves (0–8 wks)</div>
+              <div class="toc-card-cat">Young Calves</div>
+            </div>
+            <div class="toc-card" style="--card-accent:#2E7D32" onclick="showSection(9)">
+              <div class="toc-card-icon">🌱</div>
+              <div class="toc-card-num">Section 09</div>
+              <div class="toc-card-title">Weanlings & Growers</div>
+              <div class="toc-card-cat">2–12 Months</div>
+            </div>
+            <div class="toc-card" style="--card-accent:#1B4332" onclick="showSection(10)">
+              <div class="toc-card-icon">🐂</div>
+              <div class="toc-card-num">Section 10</div>
+              <div class="toc-card-title">Bulls</div>
+              <div class="toc-card-cat">Bull Nutrition</div>
+            </div>
+          </div>
+
+          <div class="section-heading">⚙️ Management Systems</div>
+          <div class="toc-grid">
+            <div class="toc-card" style="--card-accent:#1B7A6F" onclick="showSection(11)">
+              <div class="toc-card-icon">🔁</div>
+              <div class="toc-card-num">Section 11</div>
+              <div class="toc-card-title">Reproduction</div>
+              <div class="toc-card-cat">Repro Management</div>
+            </div>
+            <div class="toc-card" style="--card-accent:#D4A017" onclick="showSection(12)">
+              <div class="toc-card-icon">💊</div>
+              <div class="toc-card-num">Section 12</div>
+              <div class="toc-card-title">Health Management</div>
+              <div class="toc-card-cat">Herd Health</div>
+            </div>
+            <div class="toc-card" style="--card-accent:#1A6B9E" onclick="showSection(13)">
+              <div class="toc-card-icon">🔬</div>
+              <div class="toc-card-num">Section 13</div>
+              <div class="toc-card-title">Milk Quality</div>
+              <div class="toc-card-cat">SCC & Components</div>
+            </div>
+            <div class="toc-card" style="--card-accent:#2D6A4F" onclick="showSection(14)">
+              <div class="toc-card-icon">🏗</div>
+              <div class="toc-card-num">Section 14</div>
+              <div class="toc-card-title">Facilities & Housing</div>
+              <div class="toc-card-cat">Farm Design</div>
+            </div>
+            <div class="toc-card" style="--card-accent:#A07800" onclick="showSection(15)">
+              <div class="toc-card-icon">📊</div>
+              <div class="toc-card-num">Section 15</div>
+              <div class="toc-card-title">Economics & Profit</div>
+              <div class="toc-card-cat">Financial Management</div>
+            </div>
+            <div class="toc-card" style="--card-accent:#52B788" onclick="showSection(16)">
+              <div class="toc-card-icon">🌍</div>
+              <div class="toc-card-num">Section 16</div>
+              <div class="toc-card-title">Sustainability</div>
+              <div class="toc-card-cat">Tech & Future</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════ SECTION 01 ══════════════════ -->
+    <div class="screen" id="screen-1">
+      <div class="app-header" style="background:var(--green-deep)">
+        <button class="header-back" onclick="goHome()">←</button>
+        <span class="header-title">Introduction & Overview</span>
+        <span class="header-icon">🏛</span>
+      </div>
+      <div class="scroll-area">
+        <div class="sec-hero" style="background:linear-gradient(135deg,#1B4332,#2D6A4F)">
+          <div class="sec-num">Section 01 — Foundation</div>
+          <h1>Introduction & Enterprise Overview</h1>
+          <p>Dairy production integrates precision nutrition, reproductive efficiency, udder health, genetics, and financial management into one of agriculture's most demanding and rewarding enterprises.</p>
+        </div>
+        <div class="sec-body">
+          <div class="h2-label">Production Systems</div>
+          <div class="two-col">
+            <div class="col-box">
+              <div class="col-box-title">🏭 Confinement (TMR-based)</div>
+              <ul class="dairy-list">
+                <li>Total Mixed Ration fed in freestall or drylot barns</li>
+                <li>High production per cow (10,000–14,000+ kg/year)</li>
+                <li>Maximum control over nutrition and environment</li>
+                <li>High capital investment; high labor efficiency at scale</li>
+                <li>Common in North America, Europe, Israel</li>
+              </ul>
+            </div>
+            <div class="col-box">
+              <div class="col-box-title">🌿 Pasture-Based / Seasonal</div>
+              <ul class="dairy-list">
+                <li>Grazing provides majority of diet (>60% of DM intake)</li>
+                <li>Lower production (6,000–9,000 kg/year) but lower costs</li>
+                <li>Seasonal calving around pasture growth</li>
+                <li>Premium markets: organic, grass-fed, A2</li>
+                <li>Common in NZ, Ireland, Australia, East Africa</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="h2-label">Key Performance Benchmarks</div>
+          <div class="kpi-grid">
+            <div class="kpi-card"><div class="kpi-label">Annual Milk Yield</div><div class="kpi-val">10,500</div><div class="kpi-unit">kg/cow (top-third)</div><div class="kpi-bench">Avg: 8,200 kg/cow</div></div>
+            <div class="kpi-card teal-bg"><div class="kpi-label">Conception Rate</div><div class="kpi-val">50%</div><div class="kpi-unit">first service target</div><div class="kpi-bench">Avg: 38–42%</div></div>
+            <div class="kpi-card gold-bg"><div class="kpi-label">Calving Interval</div><div class="kpi-val">380</div><div class="kpi-unit">days maximum target</div><div class="kpi-bench">Ideal: 365 days</div></div>
+            <div class="kpi-card blue-bg"><div class="kpi-label">Somatic Cell Count</div><div class="kpi-val">&lt;200K</div><div class="kpi-unit">cells/mL (premium)</div><div class="kpi-bench">Regulatory max: 400K</div></div>
+            <div class="kpi-card gr-bg"><div class="kpi-label">Cull Rate</div><div class="kpi-val">25–30%</div><div class="kpi-unit">per year (optimal)</div><div class="kpi-bench">&gt;35% = high turnover cost</div></div>
+            <div class="kpi-card"><div class="kpi-label">Feed Cost of Milk</div><div class="kpi-val">45–55%</div><div class="kpi-unit">of total revenue</div><div class="kpi-bench">Top farms: &lt;45%</div></div>
+          </div>
+
+          <div class="h2-label">Major Dairy Breeds</div>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Breed</th><th>Yield/Year</th><th>Fat %</th><th>Protein %</th><th>Strength</th></tr></thead>
+              <tbody>
+                <tr><td>Holstein-Friesian</td><td>10,000–14,000 kg</td><td>3.5–3.8%</td><td>3.1–3.3%</td><td>Highest volume; most widely used globally</td></tr>
+                <tr><td>Jersey</td><td>6,000–8,500 kg</td><td>4.8–5.5%</td><td>3.8–4.0%</td><td>High components; feed-efficient; heat tolerance</td></tr>
+                <tr><td>Ayrshire</td><td>6,500–8,000 kg</td><td>3.8–4.2%</td><td>3.3–3.5%</td><td>Hardiness; feet/legs; good on pasture</td></tr>
+                <tr><td>Brown Swiss</td><td>7,000–9,500 kg</td><td>4.0–4.2%</td><td>3.5–3.7%</td><td>Longevity; cheese-quality milk; docility</td></tr>
+                <tr><td>Guernsey</td><td>5,500–7,500 kg</td><td>4.5–5.0%</td><td>3.5–3.8%</td><td>Golden milk (beta-carotene); A2 genetics</td></tr>
+                <tr><td>Simmental Dairy</td><td>7,000–9,000 kg</td><td>4.0–4.4%</td><td>3.4–3.6%</td><td>Dual-purpose; rugged; good feet</td></tr>
+                <tr><td>Sahiwal (tropics)</td><td>2,500–4,000 kg</td><td>4.5–5.0%</td><td>3.5–3.8%</td><td>Heat & tick tolerance; trypanotolerance</td></tr>
+                <tr><td>Friesian × Sahiwal</td><td>4,000–7,000 kg</td><td>3.8–4.5%</td><td>3.3–3.6%</td><td>Tropical adaptation; higher yield than Zebu</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="footer-note">© 2026 DAIRY PRODUCTION EXPERT REFERENCE GUIDE</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════ SECTION 02 ══════════════════ -->
+    <div class="screen" id="screen-2">
+      <div class="app-header" style="background:var(--green-mid)">
+        <button class="header-back" onclick="goHome()">←</button>
+        <span class="header-title">Cow Life Cycle</span>
+        <span class="header-icon">🔄</span>
+      </div>
+      <div class="scroll-area">
+        <div class="sec-hero" style="background:linear-gradient(135deg,#2D6A4F,#52B788)">
+          <div class="sec-num">Section 02 — Life Cycle</div>
+          <h1>The Dairy Cow Life Cycle</h1>
+          <p>Understanding the complete lactation cycle is essential for matching nutritional supply to physiological demand. Each stage has distinct metabolic priorities and ration requirements.</p>
+        </div>
+        <div class="sec-body">
+          <div class="h2-label">Life Cycle Timeline</div>
+          <div class="timeline">
+            <div class="tl-item">
+              <div class="tl-line"><div class="tl-dot">🍼</div><div class="tl-connector"></div></div>
+              <div class="tl-body"><div class="tl-stage">Birth → 8 Weeks</div><div class="tl-title">Calf Phase: Colostrum, Milk & Starter</div><div class="tl-desc">Critical immune window (0–24 hrs). Colostrum feeding, milk/milk replacer, gradual starter introduction. Weaning at 6–8 weeks. Target: 0.6–0.8 kg ADG.</div></div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-line"><div class="tl-dot teal">🌱</div><div class="tl-connector"></div></div>
+              <div class="tl-body"><div class="tl-stage">8 Weeks → 6 Months</div><div class="tl-title">Weanling / Pre-Weaning Heifer</div><div class="tl-desc">High-growth forage + grain diet. Target 0.8–1.0 kg/day ADG. Rumen development critical. Vaccinations and parasite control.</div></div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-line"><div class="tl-dot green">🐄</div><div class="tl-connector"></div></div>
+              <div class="tl-body"><div class="tl-stage">6 Months → First Breeding (14–15 months)</div><div class="tl-title">Growing Heifer</div><div class="tl-desc">Moderate growth: 0.75–0.85 kg/day. Must reach 55–60% of mature body weight at breeding. Avoid over-conditioning (BCS > 3.5).</div></div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-line"><div class="tl-dot gold">🤰</div><div class="tl-connector"></div></div>
+              <div class="tl-body"><div class="tl-stage">Bred → First Calving (~24 months)</div><div class="tl-title">Pregnant Heifer / Springing Heifer</div><div class="tl-desc">Target 85–90% of mature body weight at first calving. Transition nutrition begins 3 weeks pre-calving. BCS 3.25–3.5 at calving.</div></div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-line"><div class="tl-dot">🌅</div><div class="tl-connector"></div></div>
+              <div class="tl-body"><div class="tl-stage">Calving → Day 21</div><div class="tl-title">Fresh Cow / Early Transition</div><div class="tl-desc">Highest metabolic stress period. Negative energy balance. Monitor for metabolic diseases (ketosis, milk fever, displaced abomasum). Aggressive monitoring critical.</div></div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-line"><div class="tl-dot blue">🥛</div><div class="tl-connector"></div></div>
+              <div class="tl-body"><div class="tl-stage">Day 21 → Day 100 (Peak)</div><div class="tl-title">Early Lactation / Peak Milk</div><div class="tl-desc">Maximum milk yield reached ~6–8 weeks post-calving. Cow in NEB. Rebreed target: conception by Day 80–85. Feed intake still catching up to production demands.</div></div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-line"><div class="tl-dot teal">📈</div><div class="tl-connector"></div></div>
+              <div class="tl-body"><div class="tl-stage">Day 100 → Day 200 (Mid Lactation)</div><div class="tl-title">Mid Lactation / Recovery Phase</div><div class="tl-desc">Milk gradually declining. Cow in positive energy balance — rebuilding body reserves. Pregnancy progressing. Optimize BCS to 3.0–3.25.</div></div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-line"><div class="tl-dot gold">🌿</div><div class="tl-connector"></div></div>
+              <div class="tl-body"><div class="tl-stage">Day 200 → Dry-Off (~Day 305)</div><div class="tl-title">Late Lactation / Pre-Dry</div><div class="tl-desc">Reduce energy density. Target BCS 3.25–3.5 at dry-off. Avoid over-conditioning. Prepare for dry period intramammary therapy.</div></div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-line"><div class="tl-dot red">🌛</div><div class="tl-connector"></div></div>
+              <div class="tl-body"><div class="tl-stage">Dry-Off → 3 Weeks Pre-Calving (45–60 days)</div><div class="tl-title">Far-Off Dry Period</div><div class="tl-desc">Low-energy, high-fiber diet. Maintain BCS — not gain. Mammary gland regeneration. Colostrum development begins.</div></div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-line"><div class="tl-dot red">⚡</div></div>
+              <div class="tl-body"><div class="tl-stage">3 Weeks Pre-Calving → Calving</div><div class="tl-title">Close-Up / Transition Period</div><div class="tl-desc">DCAD nutrition (anionic diet), Vitamin E & Se loading, rumen adaptation to lactation diet. Highest-impact management period in the entire lactation cycle.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════ SECTION 03 ══════════════════ -->
+    <div class="screen" id="screen-3">
+      <div class="app-header" style="background:var(--teal)">
+        <button class="header-back" onclick="goHome()">←</button>
+        <span class="header-title">Milking Cow Nutrition</span>
+        <span class="header-icon">🥛</span>
+      </div>
+      <div class="scroll-area">
+        <div class="sec-hero" style="background:linear-gradient(135deg,#1B7A6F,#2D6A4F)">
+          <div class="sec-num">Section 03 — Core Group</div>
+          <h1>Milking Cow Nutrition & Rations</h1>
+          <p>The milking herd is the revenue engine of the dairy. Rations must support peak production, maintain body condition, sustain reproduction, and preserve cow health.</p>
+        </div>
+        <div class="sec-body">
+          <div class="info-card blue"><div class="ic-icon">💡</div><div><div class="ic-title">TMR Formulation Principle</div><p>Total Mixed Rations blend all forages, concentrates, and supplements into a single homogeneous mix. This prevents sorting, ensures every bite meets nutrient targets, and supports stable rumen pH. NDF from forage is the foundation — never below 19% of DM from forage sources.</p></div></div>
+
+          <div class="h2-label">Nutrient Requirements by Production Level</div>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Nutrient</th><th>25 kg/day</th><th>35 kg/day</th><th>45 kg/day</th><th>55 kg/day</th></tr></thead>
+              <tbody>
+                <tr><td>NEL (Mcal/day)</td><td>24.5</td><td>32.0</td><td>39.8</td><td>47.5</td></tr>
+                <tr><td>NEL Concentration</td><td>1.55 Mcal/kg</td><td>1.62</td><td>1.68</td><td>1.72</td></tr>
+                <tr><td>Crude Protein</td><td>15.0%</td><td>16.5%</td><td>17.5%</td><td>18.0%</td></tr>
+                <tr><td>NDF (% DM)</td><td>30–35%</td><td>28–32%</td><td>27–30%</td><td>26–29%</td></tr>
+                <tr><td>Starch (% DM)</td><td>22–26%</td><td>24–28%</td><td>26–30%</td><td>28–32%</td></tr>
+                <tr><td>Calcium (% DM)</td><td>0.72</td><td>0.86</td><td>0.98</td><td>1.10</td></tr>
+                <tr><td>Phosphorus (% DM)</td><td>0.37</td><td>0.42</td><td>0.47</td><td>0.52</td></tr>
+                <tr><td>Vitamin E (IU/day)</td><td>500</td><td>600</td><td>700</td><td>800</td></tr>
+                <tr><td>Dry Matter Intake</td><td>16–18 kg</td><td>20–22 kg</td><td>24–26 kg</td><td>27–30 kg</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="h2-label">Complete TMR Rations by Production Level</div>
+          <div class="ration-grid">
+            <div class="ration-card teal">
+              <div class="rc-title">Low-Production Cow</div>
+              <div class="rc-sub">20–25 kg milk/day · ~16 kg DM/day</div>
+              <div class="rc-item"><span class="rc-ingredient">Corn silage (32% DM)</span><span class="rc-amount">22 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Grass/legume hay</span><span class="rc-amount">3.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Ground corn grain</span><span class="rc-amount">3.5 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Soybean meal (48% CP)</span><span class="rc-amount">1.5 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Whole cottonseed</span><span class="rc-amount">1.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Wheat bran</span><span class="rc-amount">0.8 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Mineral/vitamin premix</span><span class="rc-amount">0.25 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Limestone</span><span class="rc-amount">0.12 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Salt (NaCl)</span><span class="rc-amount">0.08 kg FM</span></div>
+              <div class="rc-total"><span>Total as-fed</span><span class="rc-total-amt">~32.3 kg FM</span></div>
+              <div class="rc-nutrient" style="color:var(--teal)">NEL ≈ 1.55 · CP ≈ 15.2% · NDF ≈ 33%</div>
+            </div>
+            <div class="ration-card blue">
+              <div class="rc-title">Medium-Production Cow</div>
+              <div class="rc-sub">30–35 kg milk/day · ~21 kg DM/day</div>
+              <div class="rc-item"><span class="rc-ingredient">Corn silage (32% DM)</span><span class="rc-amount">26 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Alfalfa haylage (45% DM)</span><span class="rc-amount">10 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Ground corn grain</span><span class="rc-amount">5.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">High-moisture corn</span><span class="rc-amount">2.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Soybean meal (48% CP)</span><span class="rc-amount">2.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Canola meal (36% CP)</span><span class="rc-amount">1.5 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Whole cottonseed</span><span class="rc-amount">1.5 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Blood meal (RUP source)</span><span class="rc-amount">0.3 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Mineral/vitamin premix</span><span class="rc-amount">0.3 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Bicarbonate (buffer)</span><span class="rc-amount">0.2 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Limestone + Dicalcium-P</span><span class="rc-amount">0.18 kg FM</span></div>
+              <div class="rc-total"><span>Total as-fed</span><span class="rc-total-amt">~49.0 kg FM</span></div>
+              <div class="rc-nutrient" style="color:var(--blue-soft)">NEL ≈ 1.62 · CP ≈ 16.5% · NDF ≈ 30%</div>
+            </div>
+            <div class="ration-card gold">
+              <div class="rc-title">High-Production Cow</div>
+              <div class="rc-sub">40–45 kg milk/day · ~25 kg DM/day</div>
+              <div class="rc-item"><span class="rc-ingredient">Corn silage (32% DM)</span><span class="rc-amount">28 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Alfalfa haylage (45% DM)</span><span class="rc-amount">12 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Ground corn grain</span><span class="rc-amount">7.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">High-moisture corn</span><span class="rc-amount">3.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Soybean meal (48% CP)</span><span class="rc-amount">2.5 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Expeller soybean (RUP)</span><span class="rc-amount">1.5 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Whole cottonseed</span><span class="rc-amount">2.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Rumen-protected fat</span><span class="rc-amount">0.5 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Rumen-protected Met/Lys</span><span class="rc-amount">0.05 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Mineral/vitamin premix</span><span class="rc-amount">0.35 kg FM</span></div>
+              <div class="rc-total"><span>Total as-fed</span><span class="rc-total-amt">~58.8 kg FM</span></div>
+              <div class="rc-nutrient" style="color:var(--gold-deep)">NEL ≈ 1.68 · CP ≈ 17.5% · NDF ≈ 28%</div>
+            </div>
+            <div class="ration-card red">
+              <div class="rc-title">Elite-Production Cow</div>
+              <div class="rc-sub">50–55+ kg milk/day · ~28 kg DM/day</div>
+              <div class="rc-item"><span class="rc-ingredient">Corn silage (32% DM)</span><span class="rc-amount">30 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Alfalfa haylage (45% DM)</span><span class="rc-amount">14 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Ground corn grain</span><span class="rc-amount">9.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">High-moisture corn</span><span class="rc-amount">4.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Soybean meal (48% CP)</span><span class="rc-amount">3.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Expeller soybean (RUP)</span><span class="rc-amount">2.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Blood meal / fish meal</span><span class="rc-amount">0.6 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Rumen-protected fat (Ca-salt)</span><span class="rc-amount">0.7 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Rumen-protected Met/Lys</span><span class="rc-amount">0.08 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Yeast culture (Saccharomyces)</span><span class="rc-amount">10 g</span></div>
+              <div class="rc-item"><span class="rc-ingredient">NaHCO₃ + MgO buffer</span><span class="rc-amount">0.28 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Mineral/vitamin premix</span><span class="rc-amount">0.4 kg FM</span></div>
+              <div class="rc-total"><span>Total as-fed</span><span class="rc-total-amt">~68.4 kg FM</span></div>
+              <div class="rc-nutrient" style="color:var(--red-soft)">NEL ≈ 1.72 · CP ≈ 18.2% · NDF ≈ 26%</div>
+            </div>
+          </div>
+
+          <div class="h2-label">Feed Additive Strategy</div>
+          <div class="tbl-wrap">
+            <table class="tbl-teal">
+              <thead><tr><th>Additive</th><th>Dose</th><th>Expected Benefit</th></tr></thead>
+              <tbody>
+                <tr><td>Monensin (Rumensin)</td><td>200–400 mg/day</td><td>+0.5–1.5 kg milk; ↓ketosis 50%</td></tr>
+                <tr><td>Rumen-Protected Methionine</td><td>10–15 g/day</td><td>+0.5–1.0 kg milk; ↑protein %</td></tr>
+                <tr><td>Rumen-Protected Lysine</td><td>20–30 g/day</td><td>Protein yield improvement</td></tr>
+                <tr><td>Rumen-Protected Choline</td><td>60–90 g/day</td><td>↓ketosis/DA; ↑peak milk</td></tr>
+                <tr><td>Yeast Culture (S. cerevisiae)</td><td>5–20 g/day</td><td>+0.5–1.5 kg milk; ↓SARA risk</td></tr>
+                <tr><td>Niacin (nicotinic acid)</td><td>6–12 g/day</td><td>Ketosis prevention; heat stress</td></tr>
+                <tr><td>Calcium-salt Fat Supplements</td><td>0.3–0.7 kg/day</td><td>+1–3 kg milk; early lactation EB</td></tr>
+                <tr><td>Biotin</td><td>20 mg/day</td><td>↓lameness; ↑milk yield modest</td></tr>
+                <tr><td>Organic Selenium (Sel-Plex)</td><td>0.3–0.5 mg/kg DM</td><td>↑colostrum Se; ↓mastitis; fertility</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="h2-label">Pasture-Based Dairy Ration (Grazing System)</div>
+          <div class="info-card teal"><div class="ic-icon">🌿</div><div><div class="ic-title">Grazing System Supplementation Principle</div><p>When ryegrass or legume pasture provides >60% of DM intake at >180 g CP/kg DM and >10.5 MJ ME/kg DM, concentrate supplementation focuses on energy and bypass protein. Monitor pasture quality weekly.</p></div></div>
+          <div class="tbl-wrap">
+            <table class="tbl-green">
+              <thead><tr><th>Component</th><th>20 kg Milk Cow</th><th>28 kg Milk Cow</th><th>35 kg Milk Cow</th></tr></thead>
+              <tbody>
+                <tr><td>Grazed pasture</td><td>12–14 kg DM</td><td>11–13 kg DM</td><td>10–12 kg DM</td></tr>
+                <tr><td>Pasture silage/baleage</td><td>—</td><td>2 kg DM</td><td>3 kg DM</td></tr>
+                <tr><td>Concentrates (dairy blend)</td><td>2–3 kg DM</td><td>4–5 kg DM</td><td>6–8 kg DM</td></tr>
+                <tr><td>Maize silage</td><td>—</td><td>2–3 kg DM</td><td>3–5 kg DM</td></tr>
+                <tr><td>Rumen-protected fat</td><td>—</td><td>—</td><td>0.3–0.5 kg DM</td></tr>
+                <tr><td>Mineral/vitamin supplement</td><td>100 g/day</td><td>120 g/day</td><td>150 g/day</td></tr>
+                <tr><td>Total estimated DM</td><td>14–17 kg</td><td>19–23 kg</td><td>22–28 kg</td></tr>
+              </tbody>
+              <tfoot><tr><td colspan="4">Pasture allocation: 30–50 kg fresh DM/cow/day pre-graze; move to fresh break when residual reaches 1,500–1,600 kg DM/ha.</td></tr></tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════ SECTION 04 ══════════════════ -->
+    <div class="screen" id="screen-4">
+      <div class="app-header" style="background:var(--green-mid)">
+        <button class="header-back" onclick="goHome()">←</button>
+        <span class="header-title">Dry Cow Nutrition</span>
+        <span class="header-icon">🌿</span>
+      </div>
+      <div class="scroll-area">
+        <div class="sec-hero" style="background:linear-gradient(135deg,#1B4332,#2D6A4F)">
+          <div class="sec-num">Section 04 — Dry Cow</div>
+          <h1>Far-Off Dry Cow Nutrition (Days 1–42)</h1>
+          <p>The dry period allows mammary gland regeneration and nutrient replenishment. Controlled energy intake is critical to avoid over-conditioning.</p>
+        </div>
+        <div class="sec-body">
+          <div class="callout-block"><h3>⚠ Dry Cow Principle: Prevent Over-Conditioning</h3><p>Target BCS 3.25–3.5 at dry-off. Cows gaining BCS during the dry period experience increased risk of retained placenta, displaced abomasum, ketosis, and poor reproductive performance. Low-energy, high-NDF rations are the solution.</p></div>
+
+          <div class="h2-label">Far-Off Dry Cow Nutrient Targets</div>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Nutrient</th><th>Target</th><th>Rationale</th></tr></thead>
+              <tbody>
+                <tr><td>NEL concentration</td><td>1.25–1.35 Mcal/kg DM</td><td>Maintenance only; prevent over-conditioning</td></tr>
+                <tr><td>Crude Protein</td><td>12–13% DM</td><td>Maintain rumen function and body protein reserves</td></tr>
+                <tr><td>NDF</td><td>40–45% DM</td><td>Rumen fill; limit energy intake; prevent SARA</td></tr>
+                <tr><td>ADF</td><td>28–32% DM</td><td>Physical effectiveness; rumen motility</td></tr>
+                <tr><td>Dry Matter Intake</td><td>11–13 kg/day</td><td>Maintain rumen volume before transition</td></tr>
+                <tr><td>Calcium</td><td>0.45–0.60% DM</td><td>Low Ca; prepare Ca-mobilization mechanisms</td></tr>
+                <tr><td>Potassium</td><td>&lt;1.2% DM</td><td>Low K reduces milk fever risk; aids DCAD balance</td></tr>
+                <tr><td>DCAD</td><td>0 to +100 mEq/kg DM</td><td>Slightly cationic in far-off; neutral acceptable</td></tr>
+                <tr><td>Magnesium</td><td>0.35–0.40% DM</td><td>Critical for Ca absorption mechanism</td></tr>
+                <tr><td>Vitamin E</td><td>500–1,000 IU/day</td><td>Immune function; reduce mastitis at calving</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="h2-label">Far-Off Dry Cow Ration Examples</div>
+          <div class="ration-grid">
+            <div class="ration-card teal">
+              <div class="rc-title">High-Fiber Dry Cow Ration</div>
+              <div class="rc-sub">Grass/straw based · ~12 kg DM/day</div>
+              <div class="rc-item"><span class="rc-ingredient">Grass hay (medium quality)</span><span class="rc-amount">8.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Wheat straw (dilute energy)</span><span class="rc-amount">3.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Corn silage (limit)</span><span class="rc-amount">5.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Soybean meal (small)</span><span class="rc-amount">0.5 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Dry cow mineral premix</span><span class="rc-amount">0.2 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Vitamin E supplement</span><span class="rc-amount">1,000 IU</span></div>
+              <div class="rc-item"><span class="rc-ingredient">MgO (magnesium oxide)</span><span class="rc-amount">50 g</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Salt</span><span class="rc-amount">50 g</span></div>
+              <div class="rc-total"><span>NEL ≈ 1.28 Mcal/kg DM</span><span class="rc-total-amt">CP ≈ 12.5%</span></div>
+            </div>
+            <div class="ration-card green">
+              <div class="rc-title">TMR-Based Dry Cow Ration</div>
+              <div class="rc-sub">Diluted TMR approach · ~12 kg DM/day</div>
+              <div class="rc-item"><span class="rc-ingredient">Corn silage</span><span class="rc-amount">8.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Alfalfa haylage (limit)</span><span class="rc-amount">3.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Wheat straw (chopped)</span><span class="rc-amount">3.5 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Dried distillers grains</span><span class="rc-amount">0.5 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Dry cow mineral/vit premix</span><span class="rc-amount">0.2 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">MgO</span><span class="rc-amount">50 g</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Salt</span><span class="rc-amount">50 g</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Limestone (small)</span><span class="rc-amount">60 g</span></div>
+              <div class="rc-total"><span>NEL ≈ 1.30 Mcal/kg DM</span><span class="rc-total-amt">NDF ≈ 42%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════ SECTION 05 ══════════════════ -->
+    <div class="screen" id="screen-5">
+      <div class="app-header" style="background:#922B21">
+        <button class="header-back" onclick="goHome()">←</button>
+        <span class="header-title">Close-Up / Transition</span>
+        <span class="header-icon">⚡</span>
+      </div>
+      <div class="scroll-area">
+        <div class="sec-hero" style="background:linear-gradient(135deg,#922B21,#C0392B)">
+          <div class="sec-num">Section 05 — Transition Nutrition</div>
+          <h1>Close-Up / Transition Cow Rations (Days −21 to Calving)</h1>
+          <p>The transition period is the highest-impact management phase in the dairy. Objective: adapt the rumen, prevent hypocalcemia, and load antioxidants to reduce metabolic disease risk.</p>
+        </div>
+        <div class="sec-body">
+          <div class="info-card red"><div class="ic-icon">⚡</div><div><div class="ic-title">DCAD Nutrition: The Cornerstone of Transition Management</div><p>DCAD = (Na + K) − (Cl + S), measured in mEq/kg DM. A negative DCAD (−100 to −150 mEq/kg DM) induces mild compensated metabolic acidosis, activating the Ca-mobilization system before calving. Target urine pH of 6.0–7.0 in cows on anionic diets.</p></div></div>
+
+          <div class="h2-label">Close-Up Cow Nutrient Requirements</div>
+          <div class="tbl-wrap">
+            <table class="tbl-red">
+              <thead><tr><th>Nutrient</th><th>Target</th><th>Notes</th></tr></thead>
+              <tbody>
+                <tr><td>NEL concentration</td><td>1.52–1.62 Mcal/kg DM</td><td>Rumen adaptation; not excess energy</td></tr>
+                <tr><td>Dry Matter Intake</td><td>10–12 kg/day</td><td>Intake often drops 20–30% pre-calving — expected</td></tr>
+                <tr><td>Crude Protein</td><td>13–14% DM</td><td>RUP important for colostrum production</td></tr>
+                <tr><td>NDF</td><td>34–40% DM</td><td>Maintain rumen function pre-calving</td></tr>
+                <tr><td>Calcium</td><td>0.6–0.8% DM</td><td>Avoid high Ca before calving (inhibits mobilization)</td></tr>
+                <tr><td>DCAD target</td><td>−50 to −150 mEq/kg DM</td><td>Anionic salts (ammonium chloride, ammonium sulfate, MgCl)</td></tr>
+                <tr><td>Magnesium</td><td>0.40–0.45% DM</td><td>Critical — Mg required for PTH action on Ca mobilization</td></tr>
+                <tr><td>Potassium</td><td>&lt;1.2% DM</td><td>High K is most common cause of milk fever in close-ups</td></tr>
+                <tr><td>Selenium</td><td>0.3–0.5 mg/kg DM</td><td>+ injectable Se/Vit E 2–3 weeks pre-calving</td></tr>
+                <tr><td>Vitamin E</td><td>2,000–4,000 IU/day</td><td>Highest requirement of entire cycle at transition</td></tr>
+                <tr><td>Vitamin A</td><td>100,000–150,000 IU/day</td><td>Mucous membrane integrity; immune function</td></tr>
+                <tr><td>Rumen-protected choline</td><td>60–90 g/day</td><td>Prevents fatty liver; improves peak milk</td></tr>
+              </tbody>
+              <tfoot><tr><td colspan="3">Monitor urine pH daily in pens on anionic diets. Target 6.0–7.0. Below 5.8 = too acidic. Above 7.5 = not working (increase anionic loading).</td></tr></tfoot>
+            </table>
+          </div>
+
+          <div class="h2-label">Close-Up Cow Ration Example</div>
+          <div class="ration-grid">
+            <div class="ration-card red">
+              <div class="rc-title">Anionic TMR — Close-Up</div>
+              <div class="rc-sub">~21 days pre-calving · ~11 kg DM/day</div>
+              <div class="rc-item"><span class="rc-ingredient">Corn silage</span><span class="rc-amount">14 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Straw (chopped, 5 cm)</span><span class="rc-amount">2.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Alfalfa haylage (limit)</span><span class="rc-amount">3.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Corn grain (ground)</span><span class="rc-amount">2.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Soybean meal</span><span class="rc-amount">1.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Canola meal (low K)</span><span class="rc-amount">1.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Anionic salt blend</span><span class="rc-amount">0.3 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">MgO</span><span class="rc-amount">70 g</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Vit E supplement</span><span class="rc-amount">3,000 IU</span></div>
+              <div class="rc-item"><span class="rc-ingredient">RP Choline (60 g/day)</span><span class="rc-amount">per label</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Mineral/vitamin premix</span><span class="rc-amount">0.25 kg FM</span></div>
+              <div class="rc-total"><span>NEL ≈ 1.55 Mcal/kg</span><span class="rc-total-amt">DCAD ≈ −100 mEq</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════ SECTION 06 ══════════════════ -->
+    <div class="screen" id="screen-6">
+      <div class="app-header" style="background:var(--blue-soft)">
+        <button class="header-back" onclick="goHome()">←</button>
+        <span class="header-title">Fresh Cows</span>
+        <span class="header-icon">🌅</span>
+      </div>
+      <div class="scroll-area">
+        <div class="sec-hero" style="background:linear-gradient(135deg,var(--blue-soft),#1B4B8E)">
+          <div class="sec-num">Section 06 — Fresh Cow</div>
+          <h1>Fresh Cow Management (Days 1–21)</h1>
+          <p>The fresh cow period is defined by metabolic stress, negative energy balance, and the highest disease risk in the lactation. Aggressive monitoring is essential.</p>
+        </div>
+        <div class="sec-body">
+          <div class="h2-label">Fresh Cow Metabolic Disease Risk</div>
+          <div class="tbl-wrap">
+            <table class="tbl-red">
+              <thead><tr><th>Disease</th><th>Incidence</th><th>Cost/Case</th><th>Risk Factors</th></tr></thead>
+              <tbody>
+                <tr><td>Subclinical Ketosis</td><td>40–60% of cows</td><td>$150–300</td><td>NEB; over-conditioned; poor transition diet</td></tr>
+                <tr><td>Clinical Ketosis</td><td>5–10% of cows</td><td>$300–600</td><td>Days 3–6 post-calving; high BCS at calving</td></tr>
+                <tr><td>Milk Fever (Hypocalcemia)</td><td>3–10% clinical</td><td>$300–500</td><td>High Ca diet pre-calving; aged cows; Jersey</td></tr>
+                <tr><td>Displaced Abomasum (LDA)</td><td>3–8%</td><td>$500–1,200</td><td>Ketosis; over-conditioning; low DMI post-calving</td></tr>
+                <tr><td>Retained Placenta</td><td>5–15%</td><td>$200–450</td><td>Se/Vit E deficiency; dystocia; twins; milk fever</td></tr>
+                <tr><td>Metritis</td><td>15–40%</td><td>$200–400</td><td>Retained placenta; dystocia; immune suppression</td></tr>
+                <tr><td>Mastitis (coliform)</td><td>5–15%</td><td>$400–800</td><td>Se/Vit E deficiency; environmental contamination</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="h2-label">Fresh Cow Ration & Monitoring Protocol</div>
+          <div class="ration-grid">
+            <div class="ration-card blue">
+              <div class="rc-title">Fresh Cow TMR (Days 1–21)</div>
+              <div class="rc-sub">Transition to lactation diet · ~18–22 kg DM/day</div>
+              <div class="rc-item"><span class="rc-ingredient">Corn silage</span><span class="rc-amount">20 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Alfalfa haylage</span><span class="rc-amount">8.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Long-stem hay (rumen mat)</span><span class="rc-amount">2.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Ground corn grain</span><span class="rc-amount">4.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Soybean meal</span><span class="rc-amount">2.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Expeller soybean (RUP)</span><span class="rc-amount">1.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Rumen-protected choline</span><span class="rc-amount">60–90 g</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Niacin (rumen-protected)</span><span class="rc-amount">12 g</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Propylene glycol (ketosis)</span><span class="rc-amount">300 mL</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Mineral/vitamin premix</span><span class="rc-amount">0.30 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Calcium propionate</span><span class="rc-amount">100 g (Day 1–3)</span></div>
+              <div class="rc-item"><span class="rc-ingredient">MgO</span><span class="rc-amount">40 g</span></div>
+              <div class="rc-total"><span>NEL ≈ 1.60 Mcal/kg DM</span><span class="rc-total-amt">CP ≈ 16–17%</span></div>
+            </div>
+            <div class="ration-card teal">
+              <div class="rc-title">Fresh Cow Monitoring Protocol</div>
+              <div class="rc-sub">Daily checks Days 1–14</div>
+              <div class="rc-item"><span class="rc-ingredient">Urine/blood BHBA (ketosis)</span><span class="rc-amount">Days 3, 5, 7</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Milk fever check (Ca)</span><span class="rc-amount">Day 1 recumbency check</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Udder quarter palpation</span><span class="rc-amount">Days 1, 3, 7</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Vaginal discharge score</span><span class="rc-amount">Days 7, 14</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Rumination monitoring</span><span class="rc-amount">Daily (bolus or visual)</span></div>
+              <div class="rc-item"><span class="rc-ingredient">BCS re-evaluation</span><span class="rc-amount">Day 14</span></div>
+              <div class="rc-item"><span class="rc-ingredient">DMI monitoring</span><span class="rc-amount">Daily (pen-level)</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Rumen fill score</span><span class="rc-amount">Daily visual</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Milk production check</span><span class="rc-amount">Each milking</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Propylene glycol drench</span><span class="rc-amount">300 mL/day if BHBA > 1.2</span></div>
+              <div class="rc-total"><span>Goal</span><span class="rc-total-amt">BHBA &lt; 1.0 mmol/L</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════ SECTION 07 ══════════════════ -->
+    <div class="screen" id="screen-7">
+      <div class="app-header" style="background:#2E7D32">
+        <button class="header-back" onclick="goHome()">←</button>
+        <span class="header-title">Replacement Heifers</span>
+        <span class="header-icon">🐄</span>
+      </div>
+      <div class="scroll-area">
+        <div class="sec-hero" style="background:linear-gradient(135deg,#1B5E20,#2E7D32)">
+          <div class="sec-num">Section 07 — Replacement Heifers</div>
+          <h1>Replacement Heifer Development & Rations</h1>
+          <p>Raise heifers to calve at 22–24 months at 85–90% of mature body weight, with BCS 3.25–3.5. Cost per heifer raised is a major dairy expense — efficiency matters.</p>
+        </div>
+        <div class="sec-body">
+          <div class="h2-label">Growth Targets by Age (Holstein)</div>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Age</th><th>Target BW (kg)</th><th>ADG (kg/day)</th><th>Height (cm)</th><th>Management Priority</th></tr></thead>
+              <tbody>
+                <tr><td>Birth</td><td>40–45</td><td>—</td><td>75–78</td><td>Colostrum management</td></tr>
+                <tr><td>2 months (weaning)</td><td>80–90</td><td>0.70–0.80</td><td>83–86</td><td>Double birth weight by weaning</td></tr>
+                <tr><td>6 months</td><td>170–190</td><td>0.85–0.95</td><td>100–104</td><td>Transition from starter to heifer ration</td></tr>
+                <tr><td>12 months</td><td>290–330</td><td>0.75–0.85</td><td>117–122</td><td>Breeding readiness evaluation</td></tr>
+                <tr><td>14–15 months (breeding)</td><td>340–380</td><td>0.75–0.85</td><td>122–127</td><td>55–60% mature BW; BCS 3.0–3.25</td></tr>
+                <tr><td>18 months</td><td>420–460</td><td>0.75–0.80</td><td>128–132</td><td>Pregnant; moderate gain</td></tr>
+                <tr><td>21 months (springing)</td><td>500–540</td><td>0.70–0.80</td><td>132–136</td><td>Close-up transition begins</td></tr>
+                <tr><td>24 months (first calving)</td><td>560–620</td><td>—</td><td>135–140</td><td>BCS 3.25–3.5 at calving</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="h2-label">Heifer Rations by Age Group</div>
+          <div class="ration-grid">
+            <div class="ration-card green">
+              <div class="rc-title">Heifer Group A: 3–6 Months</div>
+              <div class="rc-sub">Post-weaning · 80–170 kg BW · 0.85 kg ADG</div>
+              <div class="rc-item"><span class="rc-ingredient">Calf starter (18% CP)</span><span class="rc-amount">2.5–3.5 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Mixed grass/legume hay</span><span class="rc-amount">1.5–2.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Corn silage (introduce)</span><span class="rc-amount">2.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Calf mineral supplement</span><span class="rc-amount">50 g</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Water (fresh, unlimited)</span><span class="rc-amount">ad lib</span></div>
+              <div class="rc-total"><span>CP ≈ 17% · NEL ≈ 1.65</span><span class="rc-total-amt">~6–8 kg FM</span></div>
+            </div>
+            <div class="ration-card blue">
+              <div class="rc-title">Heifer Group B: 6–12 Months</div>
+              <div class="rc-sub">Growing heifer · 170–330 kg BW · 0.85 kg ADG</div>
+              <div class="rc-item"><span class="rc-ingredient">Corn silage</span><span class="rc-amount">12 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Mixed hay (legume/grass)</span><span class="rc-amount">2.5 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Ground corn grain</span><span class="rc-amount">1.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Soybean meal (balance CP)</span><span class="rc-amount">0.8 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Heifer mineral premix</span><span class="rc-amount">80 g</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Salt (NaCl)</span><span class="rc-amount">30 g</span></div>
+              <div class="rc-total"><span>CP ≈ 14–15% · NDF ≈ 35%</span><span class="rc-total-amt">~16.5 kg FM</span></div>
+            </div>
+            <div class="ration-card teal">
+              <div class="rc-title">Heifer Group C: 12–18 Months</div>
+              <div class="rc-sub">Pre/post-breeding · 330–450 kg BW · 0.80 kg ADG</div>
+              <div class="rc-item"><span class="rc-ingredient">Corn silage</span><span class="rc-amount">14 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Alfalfa hay (moderate)</span><span class="rc-amount">2.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Grass hay / straw</span><span class="rc-amount">1.5 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Corn grain</span><span class="rc-amount">0.8 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Canola or soybean meal</span><span class="rc-amount">0.6 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Heifer mineral premix</span><span class="rc-amount">80 g</span></div>
+              <div class="rc-total"><span>CP ≈ 13–14% · NDF ≈ 38%</span><span class="rc-total-amt">~19 kg FM</span></div>
+            </div>
+            <div class="ration-card gold">
+              <div class="rc-title">Heifer Group D: 18–21 Months</div>
+              <div class="rc-sub">Late pregnancy · 450–540 kg BW · moderate gain</div>
+              <div class="rc-item"><span class="rc-ingredient">Corn silage</span><span class="rc-amount">15 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Mixed hay</span><span class="rc-amount">3.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Straw (prevent over-cond.)</span><span class="rc-amount">1.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Corn grain</span><span class="rc-amount">1.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Soybean meal</span><span class="rc-amount">0.8 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Heifer mineral premix</span><span class="rc-amount">80 g</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Vit E supplement (ramp up)</span><span class="rc-amount">500 IU</span></div>
+              <div class="rc-total"><span>BCS target: 3.0–3.25</span><span class="rc-total-amt">~21 kg FM</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════ SECTION 08 ══════════════════ -->
+    <div class="screen" id="screen-8">
+      <div class="app-header" style="background:var(--gold-deep)">
+        <button class="header-back" onclick="goHome()">←</button>
+        <span class="header-title">Calves (0–8 Weeks)</span>
+        <span class="header-icon">🍼</span>
+      </div>
+      <div class="scroll-area">
+        <div class="sec-hero" style="background:linear-gradient(135deg,#A07800,#D4A017)">
+          <div class="sec-num">Section 08 — Young Calves</div>
+          <h1>Calf Nutrition: Birth to Weaning (0–8 Weeks)</h1>
+          <p>The neonatal period is the most critical and highest-mortality risk phase. Colostrum management within the first 6 hours of life is the single most important action a dairy manager can take.</p>
+        </div>
+        <div class="sec-body">
+          <div class="callout-block teal-call"><h3>The Colostrum Golden Rule — First 6 Hours</h3><p>Feed a minimum of 3–4 liters of first-milking colostrum within 2 hours of birth, and a second feeding of 2 liters within 6–12 hours. IgG absorption peaks at birth and drops to near-zero by 24 hours. Measure colostrum quality with a Brix refractometer — Brix ≥22% = good quality.</p></div>
+
+          <div class="h2-label">Colostrum & Milk Feeding Program</div>
+          <div class="tbl-wrap">
+            <table class="tbl-teal">
+              <thead><tr><th>Age</th><th>Feed</th><th>Amount</th><th>Notes</th></tr></thead>
+              <tbody>
+                <tr><td>0–6 hours</td><td>First-milking colostrum</td><td>3–4 L total</td><td>Brix ≥22%; esophageal tube if needed</td></tr>
+                <tr><td>6–24 hours</td><td>Transition milk or colostrum</td><td>2 L at 12 h</td><td>Continue immune protection</td></tr>
+                <tr><td>Days 1–3</td><td>Transition milk (from dam)</td><td>4–6 L/day</td><td>Feed at body temperature (38.5°C)</td></tr>
+                <tr><td>Days 3–14</td><td>Whole milk or milk replacer</td><td>6–8 L/day</td><td>Accelerated: 8–10 L/day possible</td></tr>
+                <tr><td>Days 14–42</td><td>Milk/replacer + starter</td><td>8–10 L/day</td><td>Introduce starter from Day 3–4</td></tr>
+                <tr><td>Days 42–56 (weaning)</td><td>Starter + hay; wean off milk</td><td>Step-down over 1 week</td><td>Wean when eating 1.0–1.5 kg starter/day</td></tr>
+              </tbody>
+              <tfoot><tr><td colspan="4">Accelerated milk feeding (10–12 L/day) improves ADG and first-lactation milk yield. Requires high-quality milk replacer (≥26% CP, ≥17% fat, all-milk protein).</td></tr></tfoot>
+            </table>
+          </div>
+
+          <div class="h2-label">Milk Replacer Specifications</div>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Parameter</th><th>Minimum Standard</th><th>Premium Quality</th><th>Notes</th></tr></thead>
+              <tbody>
+                <tr><td>Crude Protein</td><td>20%</td><td>26–28%</td><td>All-milk protein preferred (no plant protein early)</td></tr>
+                <tr><td>Fat</td><td>15%</td><td>17–20%</td><td>Animal fat or coconut oil; no rancidity</td></tr>
+                <tr><td>Lactose</td><td>30%</td><td>38–42%</td><td>Primary energy source; calf digestible</td></tr>
+                <tr><td>Mixing rate</td><td>125 g/L (12.5%)</td><td>150 g/L (15%)</td><td>Match osmolarity of whole milk</td></tr>
+                <tr><td>Vitamin A</td><td>8,800 IU/kg powder</td><td>10,000–12,000 IU/kg</td><td>Essential for mucosal immunity</td></tr>
+                <tr><td>Selenium</td><td>0.3 mg/kg</td><td>0.5 mg/kg</td><td>White muscle disease prevention</td></tr>
+                <tr><td>Coccidiosis prevention</td><td colspan="2">Lasalocid or monensin (label dose)</td><td>Prevents cryptosporidiosis losses</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="h2-label">Calf Starter & Hay Program</div>
+          <div class="two-col">
+            <div class="col-box">
+              <div class="col-box-title">🌽 Calf Starter (Weeks 1–8)</div>
+              <ul class="dairy-list teal">
+                <li>High-energy, palatable, pelleted or texturized starter — 20–22% CP, 70%+ TDN</li>
+                <li>Introduce from Day 3–4; ad libitum access from Day 7 onward</li>
+                <li>Typical ingredients: ground corn, oats, soybean meal, molasses, mineral premix</li>
+                <li>Ensure fresh water access from Week 1 — critical for starter intake</li>
+                <li>Weaning criterion: consuming ≥1.0 kg starter/day for 3 consecutive days</li>
+              </ul>
+            </div>
+            <div class="col-box">
+              <div class="col-box-title">🌿 Hay Introduction (Weeks 3–8)</div>
+              <ul class="dairy-list green">
+                <li>Introduce good-quality grass or mixed hay from Week 3–4</li>
+                <li>Small amounts initially: 50–100 g/day, increasing to 200–400 g by weaning</li>
+                <li>Hay stimulates rumen development and prevents papillae fusion</li>
+                <li>Avoid legume-only hay early (risk of bloat in pre-weaned calves)</li>
+                <li>Chop to 3–5 cm for young calves to encourage intake</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════ SECTION 09 ══════════════════ -->
+    <div class="screen" id="screen-9">
+      <div class="app-header" style="background:#2E7D32">
+        <button class="header-back" onclick="goHome()">←</button>
+        <span class="header-title">Weanlings & Growers</span>
+        <span class="header-icon">🌱</span>
+      </div>
+      <div class="scroll-area">
+        <div class="sec-hero" style="background:linear-gradient(135deg,#1B5E20,#388E3C)">
+          <div class="sec-num">Section 09 — Weanlings & Growers</div>
+          <h1>Weanling & Growing Heifer Rations (2–12 Months)</h1>
+          <p>The post-weaning phase sets the foundation for lifetime milk yield. Optimal growth without over-conditioning is the key objective.</p>
+        </div>
+        <div class="sec-body">
+          <div class="h2-label">Weanling & Grower Rations</div>
+          <div class="ration-grid">
+            <div class="ration-card blue">
+              <div class="rc-title">Weanling Starter/Grower</div>
+              <div class="rc-sub">85–130 kg BW · 0.75–0.85 kg ADG target</div>
+              <div class="rc-item"><span class="rc-ingredient">Calf starter (texturized)</span><span class="rc-amount">2.0–3.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Mixed hay (grass/legume)</span><span class="rc-amount">1.0–1.5 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Corn silage (introduce)</span><span class="rc-amount">1.5 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Calf mineral (16:8 Ca:P)</span><span class="rc-amount">50 g</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Water (unlimited, fresh)</span><span class="rc-amount">ad lib</span></div>
+              <div class="rc-total"><span>CP ≈ 18% · NEL ≈ 1.65</span><span class="rc-total-amt">~5 kg FM</span></div>
+            </div>
+            <div class="ration-card teal">
+              <div class="rc-title">Grower Ration (4–12 mo)</div>
+              <div class="rc-sub">130–330 kg BW · 0.80–0.90 kg ADG</div>
+              <div class="rc-item"><span class="rc-ingredient">Corn silage</span><span class="rc-amount">12–15 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Alfalfa haylage or hay</span><span class="rc-amount">2.5 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Ground corn</span><span class="rc-amount">1.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Soybean meal</span><span class="rc-amount">0.7–1.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Heifer mineral premix</span><span class="rc-amount">75 g</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Salt</span><span class="rc-amount">25 g</span></div>
+              <div class="rc-total"><span>CP ≈ 14–15% · NDF ≈ 35%</span><span class="rc-total-amt">~16 kg FM</span></div>
+            </div>
+          </div>
+          <div class="info-card gold"><div class="ic-icon">⚠</div><div><div class="ic-title">Over-Conditioning Warning: Growing Heifers</div><p>Heifers gaining >1.0 kg/day consistently develop excess mammary fat (adipose infiltration of mammary gland), which permanently reduces lifetime milk yield by 10–15%. Target BCS 3.0–3.25 at first breeding; avoid starchy, energy-dense rations in 3–12 month heifers.</p></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════ SECTION 10 ══════════════════ -->
+    <div class="screen" id="screen-10">
+      <div class="app-header" style="background:var(--green-deep)">
+        <button class="header-back" onclick="goHome()">←</button>
+        <span class="header-title">Bulls</span>
+        <span class="header-icon">♂</span>
+      </div>
+      <div class="scroll-area">
+        <div class="sec-hero" style="background:linear-gradient(135deg,#1B4332,#2D4A3A)">
+          <div class="sec-num">Section 10 — Bulls</div>
+          <h1>Dairy Bull Nutrition & Management</h1>
+          <p>In AI-dominant dairy operations, bulls are largely replaced by AI sires. However, clean-up bulls and natural service programs require specific nutrition to maintain libido, semen quality, and body condition.</p>
+        </div>
+        <div class="sec-body">
+          <div class="ration-grid">
+            <div class="ration-card blue">
+              <div class="rc-title">Mature Bull — Maintenance</div>
+              <div class="rc-sub">Non-breeding season · BW 900–1,100 kg</div>
+              <div class="rc-item"><span class="rc-ingredient">Grass hay (medium quality)</span><span class="rc-amount">10–12 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Corn silage</span><span class="rc-amount">8 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Corn grain (small amount)</span><span class="rc-amount">1.0 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Bull mineral premix</span><span class="rc-amount">100 g</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Salt block (unlimited)</span><span class="rc-amount">ad lib</span></div>
+              <div class="rc-total"><span>BCS target: 3.0–3.5</span><span class="rc-total-amt">~21 kg FM</span></div>
+            </div>
+            <div class="ration-card gold">
+              <div class="rc-title">Bull — Pre/During Breeding</div>
+              <div class="rc-sub">4–6 weeks pre-breeding through breeding season</div>
+              <div class="rc-item"><span class="rc-ingredient">Mixed hay (good quality)</span><span class="rc-amount">8 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Corn silage</span><span class="rc-amount">10 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Corn + barley grain</span><span class="rc-amount">2.5 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Soybean meal</span><span class="rc-amount">0.5 kg FM</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Bull mineral (Zn, Se, Vit E)</span><span class="rc-amount">120 g</span></div>
+              <div class="rc-item"><span class="rc-ingredient">Vitamin E supplement</span><span class="rc-amount">1,000 IU</span></div>
+              <div class="rc-total"><span>BCS target: 3.25–3.75</span><span class="rc-total-amt">~21 kg FM</span></div>
+            </div>
+          </div>
+          <div class="info-card blue"><div class="ic-icon">🔬</div><div><div class="ic-title">Bull Key Nutrients for Semen Quality</div><p><strong>Zinc</strong> (65–80 mg/kg DM): Testosterone synthesis; sperm motility. <strong>Selenium + Vitamin E</strong>: Spermatozoa membrane integrity. <strong>Vitamin A</strong>: Sperm production in seminiferous tubules. <strong>Energy balance</strong>: Over-conditioned bulls (BCS >4) have reduced libido and semen quality — keep bulls lean and active.</p></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════ SECTION 11 ══════════════════ -->
+    <div class="screen" id="screen-11">
+      <div class="app-header" style="background:var(--teal)">
+        <button class="header-back" onclick="goHome()">←</button>
+        <span class="header-title">Reproduction</span>
+        <span class="header-icon">♻</span>
+      </div>
+      <div class="scroll-area">
+        <div class="sec-hero" style="background:linear-gradient(135deg,var(--teal),#1B4332)">
+          <div class="sec-num">Section 11 — Reproduction</div>
+          <h1>Reproductive Management & Protocols</h1>
+          <p>Every day open beyond 85 days costs approximately $3–6 in lost income. A 365-day calving interval is the gold standard.</p>
+        </div>
+        <div class="sec-body">
+          <div class="h2-label">Voluntary Waiting Period & Breeding Strategy</div>
+          <ul class="dairy-list">
+            <li><strong>Voluntary Waiting Period (VWP):</strong> 50–60 days post-calving. Allows uterine involution and metabolic recovery before first insemination. High-producing herds may extend to 70 days.</li>
+            <li><strong>First Service AI:</strong> Observe for estrus using tail paint, activity monitors (Heatime, AfiMilk), or visual observation. Breed 12–18 hours after standing heat.</li>
+            <li><strong>Pregnancy Detection:</strong> Rectal palpation at 35–45 days; ultrasonography at 25–32 days. Recheck at 60–90 days.</li>
+            <li><strong>Days in Milk to Conception Target:</strong> Less than 115 days. Days open exceeding 150 should trigger a reproductive review.</li>
+          </ul>
+
+          <div class="h2-label">Synchronization Protocols</div>
+          <div class="tbl-wrap">
+            <table class="tbl-teal">
+              <thead><tr><th>Protocol</th><th>Schedule</th><th>CR</th><th>Best Use</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Ovsynch</strong></td><td>GnRH Day 0 → PGF₂α Day 7 → GnRH Day 9 → AI Day 9–10 (FTAI)</td><td>35–42%</td><td>Cows; standard workhorse protocol</td></tr>
+                <tr><td><strong>Presynch-Ovsynch</strong></td><td>2× PGF₂α (14 days apart) → 12 days later start Ovsynch</td><td>40–48%</td><td>Best for first service cows</td></tr>
+                <tr><td><strong>Double-Ovsynch</strong></td><td>GnRH→PGF₂α→GnRH (presync) → then full Ovsynch</td><td>45–55%</td><td>Higher conception; recommended for heifers</td></tr>
+                <tr><td><strong>CIDR-Ovsynch</strong></td><td>CIDR inserted Day 0 + GnRH → remove CIDR + PGF Day 7 → GnRH Day 9 → FTAI</td><td>40–50%</td><td>Anovular cows; fresh cows</td></tr>
+                <tr><td><strong>5-day CIDR CO-Synch</strong></td><td>GnRH + CIDR Day 0 → PGF₂α Day 5 → GnRH + AI Day 8</td><td>42–52%</td><td>Heifers; tighter synchrony</td></tr>
+                <tr><td><strong>Resynch</strong></td><td>GnRH Day 32 after AI → PGF₂α Day 39 → GnRH Day 41 → FTAI</td><td>28–38%</td><td>Open cows diagnosed by Day 32</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="h2-label">Nutrition–Reproduction Links</div>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Nutritional Factor</th><th>Impact</th><th>Management Action</th></tr></thead>
+              <tbody>
+                <tr><td>Severe NEB (early lactation)</td><td>Delayed ovarian activity; anovulation; reduced CR</td><td>Optimize transition nutrition; avoid over-conditioning at dry-off</td></tr>
+                <tr><td>BCS loss >1 point in 60 days</td><td>Dramatically reduced conception rates</td><td>Monitor BCS monthly; correct with energy supplementation</td></tr>
+                <tr><td>Selenium/Vitamin E deficiency</td><td>Retained placenta; metritis; embryo loss</td><td>Ensure Se 0.3–0.5 mg/kg DM + Vit E 500–1,000 IU/day</td></tr>
+                <tr><td>Vitamin A deficiency</td><td>Embryonic death; reduced estrus expression</td><td>Supplement 75,000–100,000 IU/day in lactating cows</td></tr>
+                <tr><td>Copper deficiency</td><td>Silent estrus; embryo loss; irregular cycles</td><td>Maintain 12–16 mg Cu/kg DM; injectable Cu if antagonists present</td></tr>
+                <tr><td>High dietary protein (>19% CP)</td><td>Elevated BUN toxic to oocytes; reduced CR</td><td>Cap CP at 17–18% in milking cow rations</td></tr>
+                <tr><td>Rumen-protected fats (LCFA)</td><td>Improved steroidogenesis; larger follicles; ↑CR</td><td>Ca-salt fat at 0.5 kg/day in early lactation</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════ SECTION 12 ══════════════════ -->
+    <div class="screen" id="screen-12">
+      <div class="app-header" style="background:var(--gold-deep)">
+        <button class="header-back" onclick="goHome()">←</button>
+        <span class="header-title">Health Management</span>
+        <span class="header-icon">💊</span>
+      </div>
+      <div class="scroll-area">
+        <div class="sec-hero" style="background:linear-gradient(135deg,#7B5800,var(--gold-deep))">
+          <div class="sec-num">Section 12 — Health Management</div>
+          <h1>Herd Health, Vaccinations & Disease Prevention</h1>
+          <p>A structured health program prevents disease, protects animal welfare, and safeguards milk quality and profitability.</p>
+        </div>
+        <div class="sec-body">
+          <div class="h2-label">Annual Vaccination Schedule</div>
+          <div class="tbl-wrap">
+            <table class="tbl-gold">
+              <thead><tr><th>Timing</th><th>Vaccines/Treatments</th><th>Animal Group</th><th>Purpose</th></tr></thead>
+              <tbody>
+                <tr><td>4–6 weeks pre-calving</td><td>Scours vaccine; Clostridial 7-way; Vit E/Se injectable</td><td>Dry cows & springing heifers</td><td>Colostrum IgG loading; calf scours prevention</td></tr>
+                <tr><td>At calving (calf)</td><td>Nasal IBR/PI3 intranasal; Se/Vit E injection (BoSe)</td><td>Newborn calves</td><td>Respiratory protection; white muscle disease prevention</td></tr>
+                <tr><td>Calves 3–4 weeks</td><td>Respiratory MLV (IBR, BVD, PI3, BRSV) intranasal</td><td>Calves</td><td>BRD prevention</td></tr>
+                <tr><td>Calves 6–8 weeks</td><td>Clostridial 7-way; IBR/BVD (killed or MLV); Pasteurella</td><td>Calves</td><td>Systemic respiratory and clostridial protection</td></tr>
+                <tr><td>Pre-breeding heifers</td><td>IBR/BVD (MLV); Leptospirosis; Brucellosis</td><td>Heifers 4–12 months</td><td>Reproductive disease prevention</td></tr>
+                <tr><td>Annual boosters</td><td>IBR/BVD/PI3/BRSV; Leptospirosis 5-way; Clostridial</td><td>All adult cows</td><td>Ongoing herd immunity maintenance</td></tr>
+                <tr><td>Dry-off</td><td>Dry cow therapy (blanket or selective); teat sealant</td><td>All cows being dried off</td><td>Cure existing IMI; prevent new IMI</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="h2-label">Lameness Prevention & Hoof Care</div>
+          <ul class="dairy-list">
+            <li><strong>Hoof trimming:</strong> Functional trimming at dry-off and 100–150 DIM. Professional trimmer every 6 months minimum.</li>
+            <li><strong>Footbath program:</strong> Copper sulfate (5%) or formalin (3–5%) footbath 4× per week. Monitor for digital dermatitis — the most prevalent lameness cause globally.</li>
+            <li><strong>Flooring:</strong> Rubber mats or grooved concrete. Stocking density &lt;120% on freestall beds. Wet floors increase lameness 40–60%.</li>
+            <li><strong>Nutrition-lameness link:</strong> Biotin (20 mg/day), zinc methionine, and selenium improve hoof horn quality. Subacute rumen acidosis (SARA) is a primary cause of laminitis.</li>
+            <li><strong>Body condition score:</strong> Thin cows (BCS &lt;2.5) have poor digital cushion; obese cows (BCS >4.0) at calving have high laminitis risk.</li>
+          </ul>
+
+          <div class="h2-label">Mastitis Control Program (5-Point Plan)</div>
+          <ol class="dairy-ol">
+            <li><strong>Teat disinfection at milking:</strong> Pre-dipping with iodine or chlorhexidine (30-second contact time); post-dipping with barrier teat dip after every milking.</li>
+            <li><strong>Milking hygiene:</strong> Clean, dry udder preparation. Single-use paper towels. Consistent milking routine reducing letdown time.</li>
+            <li><strong>Dry cow therapy:</strong> Antibiotic infusion at dry-off + internal teat sealant. Cures 60–80% of existing IMI.</li>
+            <li><strong>Cull chronic cows:</strong> Cows with SCC >400,000 cells/mL for 3+ consecutive months or 3+ clinical mastitis cases per lactation are economically unviable.</li>
+            <li><strong>Milking machine maintenance:</strong> Annual servicing. Vacuum level 38–44 kPa; pulsation ratio 60:40; liner replacement every 2,500 milkings or 3 months.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════ SECTION 13 ══════════════════ -->
+    <div class="screen" id="screen-13">
+      <div class="app-header" style="background:var(--blue-soft)">
+        <button class="header-back" onclick="goHome()">←</button>
+        <span class="header-title">Milk Quality</span>
+        <span class="header-icon">🔬</span>
+      </div>
+      <div class="scroll-area">
+        <div class="sec-hero" style="background:linear-gradient(135deg,var(--blue-soft),#0D3E6A)">
+          <div class="sec-num">Section 13 — Milk Quality</div>
+          <h1>Milk Quality Management</h1>
+          <p>Milk quality drives both price premiums and regulatory compliance. SCC, component percentages, and bacteria count are the primary quality indicators.</p>
+        </div>
+        <div class="sec-body">
+          <div class="kpi-grid">
+            <div class="kpi-card"><div class="kpi-label">SCC — Premium Target</div><div class="kpi-val">&lt;150K</div><div class="kpi-unit">cells/mL</div><div class="kpi-bench">Regulatory max: 400K EU / 750K USA</div></div>
+            <div class="kpi-card teal-bg"><div class="kpi-label">Total Bacteria Count</div><div class="kpi-val">&lt;10K</div><div class="kpi-unit">cfu/mL</div><div class="kpi-bench">Ideal: &lt;5,000 cfu/mL</div></div>
+            <div class="kpi-card gold-bg"><div class="kpi-label">Milk Fat Target</div><div class="kpi-val">3.8–4.2%</div><div class="kpi-unit">Component %</div><div class="kpi-bench">Below 3.5% = SARA indicator</div></div>
+            <div class="kpi-card gr-bg"><div class="kpi-label">Milk Protein Target</div><div class="kpi-val">3.2–3.5%</div><div class="kpi-unit">Component %</div><div class="kpi-bench">Below 3.0% = energy deficit</div></div>
+            <div class="kpi-card blue-bg"><div class="kpi-label">MUN (Milk Urea N)</div><div class="kpi-val">10–16</div><div class="kpi-unit">mg/dL</div><div class="kpi-bench">High = excess CP; Low = CP deficient</div></div>
+            <div class="kpi-card"><div class="kpi-label">Fat:Protein Ratio</div><div class="kpi-val">&gt;1.0</div><div class="kpi-unit">ratio</div><div class="kpi-bench">Below 1.0 = ketosis risk alert</div></div>
+          </div>
+
+          <div class="h2-label">Milk Component Interpretation</div>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Indicator</th><th>Abnormal Reading</th><th>Most Likely Cause</th><th>Action</th></tr></thead>
+              <tbody>
+                <tr><td>Low milk fat (&lt;3.2%)</td><td>Fat depression</td><td>SARA; low forage NDF; high PUFA</td><td>Increase effective NDF; add buffer; reduce unsaturated fat</td></tr>
+                <tr><td>Low milk protein (&lt;2.9%)</td><td>Protein depression</td><td>Energy deficit; insufficient RUP; limiting amino acids</td><td>Increase energy density; add RUP sources; supplement Met/Lys</td></tr>
+                <tr><td>High MUN (>18 mg/dL)</td><td>Excess blood urea N</td><td>Excess degradable protein; energy:protein imbalance</td><td>Reduce RDP; balance amino acids; improve energy supply</td></tr>
+                <tr><td>Low MUN (&lt;8 mg/dL)</td><td>Deficient protein</td><td>Insufficient CP; poor forage quality</td><td>Increase CP; improve forage quality</td></tr>
+                <tr><td>Fat:protein &lt;0.9</td><td>Inverted fat:protein</td><td>Ketosis (early lactation); energy deficiency</td><td>Screen for ketosis (BHBA); adjust energy density</td></tr>
+                <tr><td>High SCC (>200K)</td><td>Subclinical mastitis</td><td>Staph. aureus; Strep. uberis; environmental pathogens</td><td>CMT testing; milk culture; review milking hygiene</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════ SECTION 14 ══════════════════ -->
+    <div class="screen" id="screen-14">
+      <div class="app-header" style="background:var(--green-mid)">
+        <button class="header-back" onclick="goHome()">←</button>
+        <span class="header-title">Facilities & Housing</span>
+        <span class="header-icon">🏗</span>
+      </div>
+      <div class="scroll-area">
+        <div class="sec-hero" style="background:linear-gradient(135deg,#2D6A4F,#1B4332)">
+          <div class="sec-num">Section 14 — Facilities</div>
+          <h1>Facilities, Housing & Environment</h1>
+          <p>Cow comfort is not a luxury — it is a direct production input. Cows that lie down for 12+ hours per day produce 2–3 kg more milk and have better reproductive performance.</p>
+        </div>
+        <div class="sec-body">
+          <div class="two-col">
+            <div class="col-box">
+              <div class="col-box-title">🏠 Freestall Barn Design Standards</div>
+              <ul class="dairy-list">
+                <li>Stall width: 1.2–1.3 m for Holsteins; 1.0–1.15 m for Jerseys</li>
+                <li>Stall length: 2.4–2.6 m (head-to-wall); 2.2–2.4 m (nose-to-nose)</li>
+                <li>Stall surface: mattress + 1–2 kg dry bedding/day; or deep sand (best udder health)</li>
+                <li>Feed alley width: 3.5–4.5 m; feed bunk space: 0.6–0.7 m/cow</li>
+                <li>Water trough space: ≥10 cm/cow; ≥2 water points per pen</li>
+                <li>Stocking density: 100–110% of stall number; >120% increases stress significantly</li>
+                <li>Ventilation: ≥60 air changes/hour in summer; tunnel ventilation + fans in heat stress zones</li>
+                <li>Heat abatement: fans (2.4–3.0 m diameter) + sprinklers above feed bunk; target THI &lt; 72</li>
+              </ul>
+            </div>
+            <div class="col-box">
+              <div class="col-box-title">🏗 Milking Parlor Types</div>
+              <ul class="dairy-list blue">
+                <li><strong>Herringbone:</strong> 50–350 cows; labor-efficient; most common worldwide</li>
+                <li><strong>Parallel:</strong> Faster milking; higher throughput; minimal cow interaction during attachment</li>
+                <li><strong>Rotary (internal/external):</strong> 500–5,000+ cows; high automation; requires skilled operators</li>
+                <li><strong>Automatic Milking Systems (AMS/Robots):</strong> Self-directed milking; 60–70 cows/unit; high capital; improved cow welfare; real-time data</li>
+                <li><strong>Milk-out interval:</strong> 8–12 hours; robots: 2–4× daily voluntary; 3× milking adds 8–15% milk</li>
+                <li><strong>Milking duration:</strong> 4–8 minutes total; avoid over-milking</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════ SECTION 15 ══════════════════ -->
+    <div class="screen" id="screen-15">
+      <div class="app-header" style="background:var(--gold-deep)">
+        <button class="header-back" onclick="goHome()">←</button>
+        <span class="header-title">Economics & Profitability</span>
+        <span class="header-icon">📊</span>
+      </div>
+      <div class="scroll-area">
+        <div class="sec-hero" style="background:linear-gradient(135deg,#6B5000,var(--gold-deep))">
+          <div class="sec-num">Section 15 — Economics & Profitability</div>
+          <h1>Dairy Economics, Costing & Profit Maximization</h1>
+          <p>Understanding the cost structure of a dairy farm is the foundation of strategic management and financial sustainability.</p>
+        </div>
+        <div class="sec-body">
+          <div class="h2-label">Cost Structure of a Dairy Farm</div>
+          <div class="tbl-wrap">
+            <table class="tbl-gold">
+              <thead><tr><th>Cost Category</th><th>% of Total Cost</th><th>Key Components</th><th>Optimization Strategy</th></tr></thead>
+              <tbody>
+                <tr><td>Feed (total)</td><td>45–60%</td><td>Forages, concentrates, minerals, additives</td><td>Forage quality; by-products; TMR accuracy; reduce waste</td></tr>
+                <tr><td>Labor</td><td>12–20%</td><td>Milking, feeding, calf care, field operations</td><td>Automation; standard operating procedures; retention</td></tr>
+                <tr><td>Replacements (heifers)</td><td>10–15%</td><td>Raising or purchasing heifers</td><td>Reduce cull rate; calve at 22–24 months; calf health</td></tr>
+                <tr><td>Facilities & Equipment</td><td>8–14%</td><td>Depreciation; maintenance; milking equipment</td><td>Preventive maintenance; optimal sizing for herd</td></tr>
+                <tr><td>Veterinary & Medicines</td><td>3–6%</td><td>Vaccines, treatments, reproduction, PD</td><td>Prevention over treatment; bulk vaccine contracts</td></tr>
+                <tr><td>Bedding</td><td>2–5%</td><td>Sand, sawdust, straw, manure solids</td><td>Deep sand beds; manure separator for recycled solids</td></tr>
+                <tr><td>Energy (utilities)</td><td>3–6%</td><td>Electricity, fuel</td><td>Variable frequency drives; LED lighting; solar</td></tr>
+                <tr><td>Finance (interest/rent)</td><td>5–15%</td><td>Loan servicing; land rent or mortgage</td><td>Equity building; refinancing; land ownership</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="h2-label">Profit Maximization Strategies</div>
+          <div class="two-col">
+            <div class="col-box">
+              <div class="col-box-title">📈 Revenue Enhancement</div>
+              <ul class="dairy-list teal">
+                <li>Maximize milk components (fat & protein) through precision nutrition — component pricing pays premium</li>
+                <li>3× milking vs 2×: adds 8–15% production; evaluate labor cost vs revenue gain</li>
+                <li>Extend productive life: each additional lactation reduces heifer replacement cost by $400–600</li>
+                <li>Produce value-added milk: organic, A2, grass-fed — 15–50% price premiums</li>
+                <li>Cull cow marketing: time slaughter for best market prices; fat culls add $50–200/head</li>
+                <li>Milk solids contracts: negotiate milk price based on kg fat + protein, not volume</li>
+              </ul>
+            </div>
+            <div class="col-box">
+              <div class="col-box-title">💰 Cost Reduction</div>
+              <ul class="dairy-list gold">
+                <li>Grow forages on-farm: corn silage at $50–90/ton vs. $130–200/ton purchased</li>
+                <li>Reduce heifer replacement cost through improved calf health (target &lt;5% mortality)</li>
+                <li>Dry cow optimization: selective dry therapy cuts antibiotic costs 30–50%</li>
+                <li>Reduce SCC: every 100,000-cell reduction improves yield 1–2% and milk price by $0.02–0.05/L</li>
+                <li>Benchmark feed efficiency: target 1.4–1.6 kg milk/kg DM; use TMR software</li>
+                <li>Manure value: anaerobic digestion for biogas; composted manure = $15–30/ton fertilizer value</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="h2-label">Critical KPIs for Financial Health</div>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>KPI</th><th>Target</th><th>Profit Impact</th></tr></thead>
+              <tbody>
+                <tr><td>Cost of milk production</td><td>&lt;$0.35–0.40/L</td><td>Primary profitability indicator</td></tr>
+                <tr><td>Feed efficiency (FE)</td><td>1.4–1.6 kg ECM/kg DM</td><td>10% FE improvement = major profit gain</td></tr>
+                <tr><td>Milk income over feed cost (IOFC)</td><td>>$8–12/cow/day</td><td>Primary daily management decision tool</td></tr>
+                <tr><td>Somatic cell count (SCC)</td><td>&lt;150,000 cells/mL</td><td>$0.02–0.08/L price impact per 100K SCC change</td></tr>
+                <tr><td>Rolling Herd Average (RHA)</td><td>>10,000 kg/cow</td><td>Benchmark genetic and management progress</td></tr>
+                <tr><td>Calving interval</td><td>&lt;13 months</td><td>13 vs 14 months = 8% more calves; significantly more milk</td></tr>
+                <tr><td>Stillbirth rate</td><td>&lt;5% (dairy)</td><td>Each stillbirth costs $600–1,200</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════ SECTION 16 ══════════════════ -->
+    <div class="screen" id="screen-16">
+      <div class="app-header" style="background:var(--green-light)" >
+        <button class="header-back" onclick="goHome()" style="color:var(--green-deep); background:rgba(0,0,0,0.1)">←</button>
+        <span class="header-title" style="color:var(--green-deep)">Sustainability</span>
+        <span class="header-icon">🌍</span>
+      </div>
+      <div class="scroll-area">
+        <div class="sec-hero" style="background:linear-gradient(135deg,#1B5E20,var(--green-mid))">
+          <div class="sec-num">Section 16 — Sustainability</div>
+          <h1>Sustainability, Technology & Future Strategies</h1>
+          <p>Top-performing dairies combine elite genetics, precision nutrition, rigorous transition cow management, and a culture of continuous improvement through data.</p>
+        </div>
+        <div class="sec-body">
+          <div class="h2-label">Precision Dairy Technologies</div>
+          <ul class="dairy-list">
+            <li><strong>Automatic Milking Systems (AMS):</strong> Real-time milk yield, conductivity, color, and fat/protein per quarter per cow per milking. Early mastitis detection and cow behavioral data.</li>
+            <li><strong>Activity monitors / rumination boluses:</strong> Detect heat, illness, rumen dysfunction. Heatime, SCR, and similar systems improve conception rates 15–25% over visual heat detection.</li>
+            <li><strong>In-line milk analyzers:</strong> Real-time fat, protein, lactose, SCC per cow. Enables daily ration adjustments and early disease detection.</li>
+            <li><strong>TMR audit software:</strong> Ensures TMR accuracy — deviation from target >5% in key ingredients significantly impacts production and health.</li>
+            <li><strong>Drone-based and satellite forage assessment:</strong> NDVI mapping of pastures; identifies fertility needs; tracks grazing allocation.</li>
+            <li><strong>Genomic testing:</strong> SNP chips (50K, 70K) provide breeding values for all traits at birth with accuracy equivalent to a daughter-proven bull. Enables faster genetic progress.</li>
+          </ul>
+
+          <div class="h2-label">Environmental Sustainability Strategies</div>
+          <div class="tbl-wrap">
+            <table class="tbl-green">
+              <thead><tr><th>Strategy</th><th>Environmental Benefit</th><th>Economic Benefit</th></tr></thead>
+              <tbody>
+                <tr><td>Anaerobic digestion (biogas)</td><td>60–70% reduction in methane from manure storage</td><td>On-farm electricity; digestate fertilizer; carbon credits</td></tr>
+                <tr><td>Precision manure application (GPS)</td><td>Reduce N and P runoff; protect waterways</td><td>Reduce purchased fertilizer; regulatory compliance</td></tr>
+                <tr><td>3-NOP methane inhibitor (Bovaer)</td><td>↓ enteric methane 20–30%</td><td>Carbon credits in emerging markets</td></tr>
+                <tr><td>Improved feed efficiency</td><td>Less feed = lower land use and emissions per kg milk</td><td>Direct feed cost savings 5–15%</td></tr>
+                <tr><td>Cover crops + precision fertilization</td><td>↑ soil carbon; ↓ nitrate leaching</td><td>Reduce purchased N by 20–40%</td></tr>
+                <tr><td>Solar / wind energy on-farm</td><td>Reduce grid electricity carbon footprint</td><td>Fix energy costs; sell surplus electricity</td></tr>
+                <tr><td>Extended cow productive life</td><td>Fewer replacements = fewer animals raised = less GHG</td><td>Save $600–1,200/year per additional lactation</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="callout-block gold-call">
+            <h3>🏆 The Path to Dairy Excellence</h3>
+            <p>Top-performing dairies combine elite genetics, precision nutrition matched to each animal group at every stage, rigorous transition cow management, disciplined mastitis prevention, and a culture of continuous improvement through data. The difference between average and exceptional is not luck — it is consistent execution of known best practices, measured against benchmarks, and corrected weekly.</p>
+          </div>
+          <div class="footer-note">© 2026 DAIRY PRODUCTION EXPERT REFERENCE GUIDE · FOR PROFESSIONAL AND EDUCATIONAL USE · ALL NUTRIENT VALUES ARE GUIDELINES — FORMULATE BASED ON INDIVIDUAL FARM FORAGE ANALYSIS</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════ JOURNEY SCREEN ══════════════════ -->
+    <div class="screen" id="screen-journey">
+      <div class="app-header" style="background:var(--teal)">
+        <span style="font-size:1.3rem">🗺</span>
+        <span class="header-title">Dairy Journey</span>
+      </div>
+      <div class="scroll-area">
+        <div class="journey-screen-hero">
+          <div class="hero-badge">🌿 16 Sections · Complete Reference</div>
+          <h2>Your Learning Path</h2>
+          <p>Follow this sequence from enterprise overview to sustainability for the most comprehensive understanding of dairy production.</p>
+        </div>
+
+        <div class="journey-cat-title">🏛 Enterprise Overview</div>
+        <div class="journey-list">
+          <div class="journey-row" style="border-left-color:#2D6A4F" onclick="showSection(1)">
+            <span class="journey-row-icon">🏛</span>
+            <div class="journey-row-info">
+              <div class="journey-row-num">Section 01 · Foundation</div>
+              <div class="journey-row-title">Introduction &amp; Enterprise Overview</div>
+            </div>
+            <span class="journey-row-arrow">›</span>
+          </div>
+          <div class="journey-row" style="border-left-color:#52B788" onclick="showSection(2)">
+            <span class="journey-row-icon">🔄</span>
+            <div class="journey-row-info">
+              <div class="journey-row-num">Section 02 · Life Cycle</div>
+              <div class="journey-row-title">Cow Life Cycle</div>
+            </div>
+            <span class="journey-row-arrow">›</span>
+          </div>
+        </div>
+
+        <div class="journey-cat-title">🥛 Animal Groups &amp; Rations</div>
+        <div class="journey-list">
+          <div class="journey-row" style="border-left-color:#1B7A6F" onclick="showSection(3)">
+            <span class="journey-row-icon">🥛</span>
+            <div class="journey-row-info">
+              <div class="journey-row-num">Section 03 · Core Group</div>
+              <div class="journey-row-title">Milking Cow Nutrition &amp; Rations</div>
+            </div>
+            <span class="journey-row-arrow">›</span>
+          </div>
+          <div class="journey-row" style="border-left-color:#2D6A4F" onclick="showSection(4)">
+            <span class="journey-row-icon">🌿</span>
+            <div class="journey-row-info">
+              <div class="journey-row-num">Section 04 · Dry Cow</div>
+              <div class="journey-row-title">Far-Off Dry Cow Nutrition</div>
+            </div>
+            <span class="journey-row-arrow">›</span>
+          </div>
+          <div class="journey-row" style="border-left-color:#C0392B" onclick="showSection(5)">
+            <span class="journey-row-icon">⚡</span>
+            <div class="journey-row-info">
+              <div class="journey-row-num">Section 05 · Transition</div>
+              <div class="journey-row-title">Close-Up / Transition Cow Rations</div>
+            </div>
+            <span class="journey-row-arrow">›</span>
+          </div>
+          <div class="journey-row" style="border-left-color:#1A6B9E" onclick="showSection(6)">
+            <span class="journey-row-icon">🌅</span>
+            <div class="journey-row-info">
+              <div class="journey-row-num">Section 06 · Days 1–21</div>
+              <div class="journey-row-title">Fresh Cow Management</div>
+            </div>
+            <span class="journey-row-arrow">›</span>
+          </div>
+          <div class="journey-row" style="border-left-color:#52B788" onclick="showSection(7)">
+            <span class="journey-row-icon">🐄</span>
+            <div class="journey-row-info">
+              <div class="journey-row-num">Section 07 · Heifer Development</div>
+              <div class="journey-row-title">Replacement Heifer Development</div>
+            </div>
+            <span class="journey-row-arrow">›</span>
+          </div>
+          <div class="journey-row" style="border-left-color:#D4A017" onclick="showSection(8)">
+            <span class="journey-row-icon">🍼</span>
+            <div class="journey-row-info">
+              <div class="journey-row-num">Section 08 · Young Calves</div>
+              <div class="journey-row-title">Calf Nutrition: Birth to Weaning</div>
+            </div>
+            <span class="journey-row-arrow">›</span>
+          </div>
+          <div class="journey-row" style="border-left-color:#2E7D32" onclick="showSection(9)">
+            <span class="journey-row-icon">🌱</span>
+            <div class="journey-row-info">
+              <div class="journey-row-num">Section 09 · 2–12 Months</div>
+              <div class="journey-row-title">Weanling &amp; Growing Heifer Rations</div>
+            </div>
+            <span class="journey-row-arrow">›</span>
+          </div>
+          <div class="journey-row" style="border-left-color:#1B4332" onclick="showSection(10)">
+            <span class="journey-row-icon">🐂</span>
+            <div class="journey-row-info">
+              <div class="journey-row-num">Section 10 · Bulls</div>
+              <div class="journey-row-title">Dairy Bull Nutrition &amp; Management</div>
+            </div>
+            <span class="journey-row-arrow">›</span>
+          </div>
+        </div>
+
+        <div class="journey-cat-title">⚙️ Management Systems</div>
+        <div class="journey-list">
+          <div class="journey-row" style="border-left-color:#1B7A6F" onclick="showSection(11)">
+            <span class="journey-row-icon">🔁</span>
+            <div class="journey-row-info">
+              <div class="journey-row-num">Section 11 · Reproduction</div>
+              <div class="journey-row-title">Reproductive Management &amp; Protocols</div>
+            </div>
+            <span class="journey-row-arrow">›</span>
+          </div>
+          <div class="journey-row" style="border-left-color:#D4A017" onclick="showSection(12)">
+            <span class="journey-row-icon">💊</span>
+            <div class="journey-row-info">
+              <div class="journey-row-num">Section 12 · Health</div>
+              <div class="journey-row-title">Herd Health, Vaccinations &amp; Disease Prevention</div>
+            </div>
+            <span class="journey-row-arrow">›</span>
+          </div>
+          <div class="journey-row" style="border-left-color:#1A6B9E" onclick="showSection(13)">
+            <span class="journey-row-icon">🔬</span>
+            <div class="journey-row-info">
+              <div class="journey-row-num">Section 13 · Milk Quality</div>
+              <div class="journey-row-title">Milk Quality Management</div>
+            </div>
+            <span class="journey-row-arrow">›</span>
+          </div>
+          <div class="journey-row" style="border-left-color:#2D6A4F" onclick="showSection(14)">
+            <span class="journey-row-icon">🏗️</span>
+            <div class="journey-row-info">
+              <div class="journey-row-num">Section 14 · Farm Design</div>
+              <div class="journey-row-title">Facilities, Housing &amp; Environment</div>
+            </div>
+            <span class="journey-row-arrow">›</span>
+          </div>
+          <div class="journey-row" style="border-left-color:#A07800" onclick="showSection(15)">
+            <span class="journey-row-icon">📊</span>
+            <div class="journey-row-info">
+              <div class="journey-row-num">Section 15 · Economics</div>
+              <div class="journey-row-title">Dairy Economics, Costing &amp; Profit</div>
+            </div>
+            <span class="journey-row-arrow">›</span>
+          </div>
+          <div class="journey-row" style="border-left-color:#52B788" onclick="showSection(16)">
+            <span class="journey-row-icon">🌍</span>
+            <div class="journey-row-info">
+              <div class="journey-row-num">Section 16 · Sustainability</div>
+              <div class="journey-row-title">Sustainability, Technology &amp; Future Strategies</div>
+            </div>
+            <span class="journey-row-arrow">›</span>
+          </div>
+        </div>
+        <div style="height:16px"></div>
+      </div>
+    </div>
+
+    <!-- ══════════════════ SEARCH SCREEN ══════════════════ -->
+    <div class="screen" id="screen-search">
+      <div class="app-header" style="background:var(--green-deep)">
+        <span style="font-size:1.3rem">🔍</span>
+        <span class="header-title">Browse Sections</span>
+      </div>
+      <div class="scroll-area">
+        <div class="search-bar-wrap">
+          <input type="text" class="search-input" placeholder="Search sections..." id="searchInput" oninput="filterSearch(this.value)">
+        </div>
+        <div id="searchResults"></div>
+      </div>
+    </div>
+
+  </div><!-- end screens -->
+
+  <!-- BOTTOM NAV -->
+  <div class="bottom-nav">
+    <button class="nav-tab active" id="tab-home" onclick="showTab('home')">
+      <span class="nav-tab-icon">🏡</span>
+      <span class="nav-tab-label">Home</span>
+    </button>
+    <button class="nav-tab" id="tab-journey" onclick="showTab('journey')">
+      <span class="nav-tab-icon">🗺</span>
+      <span class="nav-tab-label">Journey</span>
+    </button>
+    <button class="nav-tab" id="tab-search" onclick="showTab('search')">
+      <span class="nav-tab-icon">🔍</span>
+      <span class="nav-tab-label">Browse</span>
+    </button>
+  </div>
+
+</div><!-- end phone -->
+
+<script>
+// Clock
+function updateClock() {
+  const d = new Date();
+  const h = d.getHours().toString().padStart(2,'0');
+  const m = d.getMinutes().toString().padStart(2,'0');
+  document.getElementById('clock').textContent = h + ':' + m;
+}
+updateClock();
+setInterval(updateClock, 10000);
+
+// Screen management
+let currentScreen = 'home';
+let currentTab = 'home';
+
+const allSections = [
+  { id: 1, icon: '🏛', num: '01', title: 'Introduction & Enterprise Overview', cat: 'Foundation' },
+  { id: 2, icon: '🔄', num: '02', title: 'Cow Life Cycle', cat: 'Life Cycle' },
+  { id: 3, icon: '🥛', num: '03', title: 'Milking Cow Nutrition & Rations', cat: 'Core Group' },
+  { id: 4, icon: '🌿', num: '04', title: 'Far-Off Dry Cow Nutrition', cat: 'Dry Cow' },
+  { id: 5, icon: '⚡', num: '05', title: 'Close-Up / Transition Cow Rations', cat: 'Transition Nutrition' },
+  { id: 6, icon: '🌅', num: '06', title: 'Fresh Cow Management', cat: 'Days 1–21' },
+  { id: 7, icon: '🐄', num: '07', title: 'Replacement Heifer Development & Rations', cat: 'Heifer Development' },
+  { id: 8, icon: '🍼', num: '08', title: 'Calf Nutrition: Birth to Weaning', cat: 'Young Calves' },
+  { id: 9, icon: '🌱', num: '09', title: 'Weanling & Growing Heifer Rations', cat: '2–12 Months' },
+  { id: 10, icon: '♂', num: '10', title: 'Dairy Bull Nutrition & Management', cat: 'Bulls' },
+  { id: 11, icon: '♻', num: '11', title: 'Reproductive Management & Protocols', cat: 'Reproduction' },
+  { id: 12, icon: '💊', num: '12', title: 'Herd Health, Vaccinations & Disease Prevention', cat: 'Health Management' },
+  { id: 13, icon: '🔬', num: '13', title: 'Milk Quality Management', cat: 'Milk Quality' },
+  { id: 14, icon: '🏗', num: '14', title: 'Facilities, Housing & Environment', cat: 'Farm Design' },
+  { id: 15, icon: '📊', num: '15', title: 'Dairy Economics, Costing & Profit Maximization', cat: 'Economics' },
+  { id: 16, icon: '🌍', num: '16', title: 'Sustainability, Technology & Future Strategies', cat: 'Sustainability' },
+];
+
+function buildSearchResults(sections) {
+  const container = document.getElementById('searchResults');
+  container.innerHTML = sections.map(s => `
+    <div class="search-result" onclick="showSection(${s.id})">
+      <span class="sr-icon">${s.icon}</span>
+      <div>
+        <div class="sr-title">Section ${s.num}: ${s.title}</div>
+        <div class="sr-sub">${s.cat}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterSearch(val) {
+  const lower = val.toLowerCase();
+  const filtered = allSections.filter(s =>
+    s.title.toLowerCase().includes(lower) ||
+    s.cat.toLowerCase().includes(lower) ||
+    s.num.includes(lower)
+  );
+  buildSearchResults(filtered);
+}
+
+buildSearchResults(allSections);
+
+function activateScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => {
+    s.classList.remove('active','slide-back');
+  });
+  const target = document.getElementById(id);
+  if (target) {
+    target.classList.add('active');
+    // Scroll to top
+    const scrollArea = target.querySelector('.scroll-area');
+    if (scrollArea) scrollArea.scrollTop = 0;
+  }
+  currentScreen = id;
+}
+
+function showSection(num) {
+  activateScreen('screen-' + num);
+  // Update tabs
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  // Inject prev/next nav
+  injectSectionNav(num);
+}
+
+function injectSectionNav(num) {
+  const screen = document.getElementById('screen-' + num);
+  if (!screen) return;
+  // Remove existing if any
+  const existing = screen.querySelector('.sec-nav');
+  if (existing) existing.remove();
+  const scrollArea = screen.querySelector('.scroll-area');
+  if (!scrollArea) return;
+
+  const prev = num > 1 ? allSections[num - 2] : null;
+  const next = num < allSections.length ? allSections[num] : null;
+
+  const nav = document.createElement('div');
+  nav.className = 'sec-nav';
+  nav.innerHTML = `
+    ${prev ? `<button class="sec-nav-btn prev" onclick="showSection(${prev.id})">
+      <span>←</span>
+      <div class="nav-label">${prev.icon} §${prev.num}</div>
+    </button>` : `<div style="flex:1"></div>`}
+    <button class="sec-nav-btn" onclick="goHome()" style="flex:0 0 auto;padding:10px 14px;font-size:0.7rem;">🏡 Home</button>
+    ${next ? `<button class="sec-nav-btn next" onclick="showSection(${next.id})">
+      <div class="nav-label">§${next.num} ${next.icon}</div>
+      <span>→</span>
+    </button>` : `<div style="flex:1"></div>`}
+  `;
+  scrollArea.appendChild(nav);
+}
+
+function goHome() {
+  activateScreen('screen-home');
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-home').classList.add('active');
+  currentTab = 'home';
+}
+
+function showTab(tab) {
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  currentTab = tab;
+  if (tab === 'home') {
+    activateScreen('screen-home');
+  } else if (tab === 'journey') {
+    activateScreen('screen-journey');
+  } else if (tab === 'search') {
+    activateScreen('screen-search');
+    setTimeout(() => document.getElementById('searchInput').focus(), 100);
+  }
+}
+</script>
+<script>
+// Register service worker for offline support
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  });
+}
+</script>
+</body>
+</html>
