@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.mykbravics.dairyexplorer",
+        "sha256_cert_fingerprints": ["C8:7D:B9:C7:76:9C:4E:C1:01:58:B1:51:22:BA:79:16:FA:BF:83:C6:4A:92:47:EE:23:26:D2:4D:54:79:38:1A"]
+      }
+    }]
