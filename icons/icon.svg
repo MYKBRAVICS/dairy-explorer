@@ -1,21 +1,44 @@
-{
-  "name": "Dairy Explorer — Expert Reference Guide",
-  "short_name": "Dairy Explorer",
-  "description": "A complete reference for modern dairy production covering nutrition, health, economics, and sustainability across 16 sections.",
-  "start_url": "./index.html",
-  "display": "standalone",
-  "orientation": "portrait",
-  "background_color": "#1B4332",
-  "theme_color": "#1B4332",
-  "lang": "en",
-  "icons": [
-    {
-      "src": "icons/icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
-    }
-  ],
-  "categories": ["education", "productivity"],
-  "screenshots": []
-}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" rx="110" fill="#1B4332"/>
+  <rect x="50" y="70" width="412" height="200" rx="6" fill="#1A6B9E" opacity="0.3"/>
+  <polygon points="30,220 256,85 482,220" fill="#C0392B"/>
+  <rect x="60" y="215" width="390" height="170" rx="6" fill="#7D3C08"/>
+  <rect x="95" y="270" width="72" height="115" rx="5" fill="#4A2409"/>
+  <rect x="192" y="270" width="72" height="115" rx="5" fill="#4A2409"/>
+  <rect x="305" y="248" width="88" height="68" rx="6" fill="#85C1E9"/>
+  <line x1="349" y1="248" x2="349" y2="316" stroke="#1B4332" stroke-width="4"/>
+  <line x1="305" y1="282" x2="393" y2="282" stroke="#1B4332" stroke-width="4"/>
+  <rect x="402" y="188" width="56" height="197" rx="28" fill="#AABBC0"/>
+  <ellipse cx="430" cy="188" rx="28" ry="13" fill="#8FA0A5"/>
+  <ellipse cx="256" cy="395" rx="215" ry="18" fill="#52B788" opacity="0.5"/>
+  <ellipse cx="210" cy="348" rx="100" ry="60" fill="#F5F5F5"/>
+  <ellipse cx="175" cy="325" rx="38" ry="28" fill="#111111"/>
+  <ellipse cx="242" cy="360" rx="30" ry="21" fill="#111111"/>
+  <ellipse cx="205" cy="375" rx="20" ry="15" fill="#111111"/>
+  <ellipse cx="302" cy="325" rx="28" ry="21" fill="#F5F5F5"/>
+  <ellipse cx="308" cy="318" rx="12" ry="10" fill="#111111"/>
+  <ellipse cx="338" cy="300" rx="38" ry="30" fill="#F5F5F5"/>
+  <ellipse cx="332" cy="292" rx="20" ry="15" fill="#111111"/>
+  <ellipse cx="366" cy="312" rx="18" ry="13" fill="#F1BFBF"/>
+  <circle cx="360" cy="314" r="4" fill="#B05050"/>
+  <circle cx="372" cy="314" r="4" fill="#B05050"/>
+  <circle cx="342" cy="290" r="6" fill="#ffffff"/>
+  <circle cx="343" cy="290" r="4" fill="#111111"/>
+  <circle cx="344" cy="288" r="1" fill="#ffffff"/>
+  <ellipse cx="312" cy="276" rx="9" ry="14" fill="#F5F5F5" transform="rotate(-20 312 276)"/>
+  <ellipse cx="312" cy="276" rx="5" ry="9" fill="#F1BFBF" transform="rotate(-20 312 276)"/>
+  <path d="M318 268 Q305 248 315 238" stroke="#D4A017" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <rect x="146" y="390" width="21" height="50" rx="10" fill="#F5F5F5"/>
+  <rect x="146" y="390" width="21" height="25" fill="#111111"/>
+  <rect x="180" y="393" width="21" height="47" rx="10" fill="#F5F5F5"/>
+  <rect x="215" y="395" width="21" height="45" rx="10" fill="#F5F5F5"/>
+  <rect x="249" y="393" width="21" height="47" rx="10" fill="#F5F5F5"/>
+  <rect x="249" y="393" width="21" height="23" fill="#111111"/>
+  <rect x="146" y="432" width="21" height="10" rx="5" fill="#2C1A10"/>
+  <rect x="249" y="408" width="21" height="10" rx="5" fill="#2C1A10"/>
+  <ellipse cx="205" cy="395" rx="32" ry="15" fill="#F1BFBF"/>
+  <path d="M122 345 Q92 375 102 405" stroke="#F5F5F5" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <ellipse cx="102" cy="407" rx="8" ry="12" fill="#111111" transform="rotate(20 102 407)"/>
+  <rect x="50" y="443" width="412" height="50" rx="12" fill="#D4A017"/>
+  <text x="256" y="477" font-family="Georgia, serif" font-size="26" font-weight="bold" fill="#1B4332" text-anchor="middle">DAIRY EXPLORER</text>
+</svg>
