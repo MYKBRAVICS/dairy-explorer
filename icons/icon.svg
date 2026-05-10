@@ -1,0 +1,21 @@
+{
+  "name": "Dairy Explorer — Expert Reference Guide",
+  "short_name": "Dairy Explorer",
+  "description": "A complete reference for modern dairy production covering nutrition, health, economics, and sustainability across 16 sections.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1B4332",
+  "theme_color": "#1B4332",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "productivity"],
+  "screenshots": []
+}
